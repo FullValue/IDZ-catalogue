@@ -111,10 +111,15 @@
                   <div style="display:flex; flex-direction:column; gap:12px; text-align:center;">
                     <div style="border:1px solid rgba(201,160,92,0.24); padding:8px;">
                       <div style="{{ p.swatchStyle }} aspect-ratio:4/5; position:relative; overflow:hidden;">
-                        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
-                          <div style="width:24px; height:38px; border:1px solid rgba(255,255,255,0.3); border-radius:3px 3px 6px 6px;"></div>
-                          <span style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
-                        </div>
+                        <sc-if value="{{ p.hasImage }}" hint-placeholder-val="{{ false }}">
+                          <img src="{{ p.image }}" alt="{{ p.name }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" />
+                        </sc-if>
+                        <sc-if value="{{ p.noImage }}" hint-placeholder-val="{{ true }}">
+                          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+                            <div style="width:24px; height:38px; border:1px solid rgba(255,255,255,0.3); border-radius:3px 3px 6px 6px;"></div>
+                            <span style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
+                          </div>
+                        </sc-if>
                         <div style="position:absolute; top:11px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ p.num }}</div>
                       </div>
                     </div>
@@ -149,10 +154,15 @@
       <div style="padding:30px 20px 8px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:20px;">
         <div style="border:1px solid rgba(201,160,92,0.3); padding:10px; box-shadow:0 28px 70px rgba(0,0,0,0.6); animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.05s both;">
           <div style="{{ selected.swatchStyle }} width:min(56vw,230px); aspect-ratio:4/5; position:relative; overflow:hidden;">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:9px;">
-              <div style="width:36px; height:56px; border:1px solid rgba(255,255,255,0.3); border-radius:5px 5px 10px 10px;"></div>
-              <span style="font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
-            </div>
+            <sc-if value="{{ selected.hasImage }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ selected.image }}" alt="{{ selected.name }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" />
+            </sc-if>
+            <sc-if value="{{ selected.noImage }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:9px;">
+                <div style="width:36px; height:56px; border:1px solid rgba(255,255,255,0.3); border-radius:5px 5px 10px 10px;"></div>
+                <span style="font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
+              </div>
+            </sc-if>
             <div style="position:absolute; top:12px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ selected.num }}</div>
           </div>
         </div>
@@ -217,7 +227,11 @@
             <sc-for list="{{ others }}" as="p" hint-placeholder-count="4">
               <div onClick="{{ p.open }}" style="cursor:pointer; flex:0 0 auto; width:124px; scroll-snap-align:start; display:flex; flex-direction:column; gap:9px; text-align:center; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);" style-hover="{{ cardHover }}">
                 <div style="border:1px solid rgba(201,160,92,0.2); padding:5px;">
-                  <div style="{{ p.swatchStyle }} aspect-ratio:4/5;"></div>
+                  <div style="{{ p.swatchStyle }} aspect-ratio:4/5; position:relative; overflow:hidden;">
+                    <sc-if value="{{ p.hasImage }}" hint-placeholder-val="{{ false }}">
+                      <img src="{{ p.image }}" alt="{{ p.name }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" />
+                    </sc-if>
+                  </div>
                 </div>
                 <span style="font-family:'Cormorant Garamond', serif; font-size:14px; color:#ece5da;">{{ p.name }}</span>
               </div>
@@ -248,14 +262,21 @@ const TONES = [
 // { name, top, heart, base }  (pyramide olfactive)  ou  { name, notes } (liste simple).
 const MAISONS = [
   { maison: 'Arts & Odeurs', items: ['Foudre Exotique', 'Sun Rose', 'Dragon Rose', "Sucre d'Antan", 'Vanille Américaine', 'Coco des Îles', 'Musc Fruité', 'Ice Blue'] },
-  { maison: 'Maison Maya', items: ['Royal Saffran', 'Suave', 'Réveil Lusitanie', 'Noyau Blanc', 'Place Vendôme'] },
+  { maison: 'Maison Maya', items: [
+    { name: 'Royal Saffran', top: ['Bergamote', 'Poivre rose'], heart: ['Romarin', 'Rose'], base: ['Safran', 'Cuir', 'Cèdre'] },
+    { name: 'Suave', top: ['Citron', 'Poire'], heart: ['Guimauve', 'Jasmin', "Fleur d'oranger"], base: ['Vanille', 'Bois de santal', 'Musc'] },
+    { name: 'Réveil Lusitanie', top: ['Orange sanguine', 'Mandarine', 'Citron'], heart: ['Abricot', 'Néroli', 'Jasmin', 'Gardénia'], base: ['Vanille', 'Musc'] },
+    { name: 'Noyau Blanc', top: ['Amande'], heart: ["Absolu d'iris", 'Caramel'], base: ['Cacahuète pralinée', 'Fève de tonka', 'Bois de santal'] },
+    { name: 'Place Vendôme', top: ['Mandarine', 'Poivre blanc', 'Néroli'], heart: ['Jasmin', 'Tubéreuse', 'Lys', 'Ambrette'], base: ['Vanille', 'Bois de santal', 'Benjoin'] },
+    { name: 'Mandoria', top: ['Amande', "Fleur d'oranger"], heart: ["Fleur d'amandier", 'Rose'], base: ['Vanille', 'Fève de tonka', 'Amyris'] }
+  ] },
   { maison: 'Maison Massimo', items: [
     { name: 'La Rose Bleue', top: ['Orange', 'Citron', 'Bergamote'], heart: ['Notes solaires', 'Fruits secs', 'Guimauve'], base: ['Musc', 'Vanille', 'Ambre'] },
     { name: 'Gold Signature', top: ['Orange', 'Rhubarbe', 'Bergamote'], heart: ['Framboise', 'Cèdre', 'Notes solaires'], base: ['Patchouli', 'Vanille', 'Ambre gris', 'Musc'] }
   ] },
   { maison: 'Ulyka', items: [
-    { name: 'Nota Loca', top: ["Baie d'açaï", 'Coco', 'Yuzu'], heart: ['Papaye', 'Mangue', 'Cardamome'], base: ['Musc', 'Vanille', 'Fève tonka'] },
-    { name: 'Nota Sugar', notes: ['Caramel', 'Ananas', 'Framboise', "Praline d'amande", 'Gousse de vanille', 'Fève tonka', 'Musc', 'Héliotrope'] }
+    { name: 'Nota Loca', image: 'IMAGES/Nota%20loca.jpg', top: ["Baie d'açaï", 'Coco', 'Yuzu'], heart: ['Papaye', 'Mangue', 'Cardamome'], base: ['Musc', 'Vanille', 'Fève tonka'] },
+    { name: 'Nota Sugar', image: 'IMAGES/Nota%20sugar.png', notes: ['Caramel', 'Ananas', 'Framboise', "Praline d'amande", 'Gousse de vanille', 'Fève tonka', 'Musc', 'Héliotrope'] }
   ] },
   { maison: 'Maison Mataha', items: [
     { name: 'Pêche Velours', top: ['Pêche'], heart: ['Violette', 'Tubéreuse', 'Jasmin'], base: ['Vanille', 'Musc', 'Santal'] }
@@ -264,8 +285,8 @@ const MAISONS = [
     { name: 'Bianco Latte', top: ['Caramel'], heart: ['Coumarine', 'Miel'], base: ['Vanille', 'Musc blanc'] }
   ] },
   { maison: 'Al Fanak', items: [
-    { name: 'Figue de Tipaza', top: ['Figue', 'Fleurs blanches', 'Ylang-ylang'], heart: ['Cannelle', 'Figue', 'Jasmin', 'Ylang-ylang'], base: ['Vanille', 'Santal', 'Cèdre'] },
-    'Cerise de Tlemcen'
+    { name: 'Figue de Tipaza', image: 'IMAGES/figue%20de%20tipaza.jpg.webp', top: ['Figue', 'Fleurs blanches', 'Ylang-ylang'], heart: ['Cannelle', 'Figue', 'Jasmin', 'Ylang-ylang'], base: ['Vanille', 'Santal', 'Cèdre'] },
+    { name: 'Cerise de Tlemcen', image: 'IMAGES/cerise%20de%20tlemcen.jpg.webp' }
   ] },
   { maison: 'Maison Fragranza', items: [
     { name: 'Rosa Vento', top: ['Fruits rouges', 'Fruits exotiques'], heart: ['Rose blanche', 'Musc poudré'], base: ['Vanille crémeuse', 'Caramel', 'Musc'] },
@@ -278,9 +299,9 @@ const MAISONS = [
     { name: 'Vanilla Exotica', top: ['Vanille', 'Coco', 'Pêche'], heart: ['Jasmin', 'Tiaré'], base: ['Notes boisées', 'Musc'] }
   ] },
   { maison: 'Maison Berliner', items: [
-    { name: 'Sucre Pink', top: ['Framboise', 'Coco'], heart: ['Caramel', 'Sucre roux'], base: ['Musc', 'Rose'] },
-    { name: 'Buteur', top: ['Orange', 'Citron de Sicile', 'Bergamote de Calabre'], heart: ['Fruits'], base: ['Musc blanc', 'Vanille de Madagascar', 'Ambre'] },
-    { name: 'Halim', top: ['Sucre roux'], heart: ['Vanille'], base: ['Orchidée'] }
+    { name: 'Sucre Pink', image: 'IMAGES/sucre%20pink.jpeg.webp', top: ['Framboise', 'Coco'], heart: ['Caramel', 'Sucre roux'], base: ['Musc', 'Rose'] },
+    { name: 'Buteur', image: 'IMAGES/buteur.jpeg.webp', top: ['Orange', 'Citron de Sicile', 'Bergamote de Calabre'], heart: ['Fruits'], base: ['Musc blanc', 'Vanille de Madagascar', 'Ambre'] },
+    { name: 'Halim', image: 'IMAGES/halim.jpeg.webp', top: ['Sucre roux'], heart: ['Vanille'], base: ['Orchidée'] }
   ] },
   { maison: 'Rosendo Mateu', items: [
     { name: 'RS5', top: ['Épices', 'Notes florales exotiques'], heart: ['Œillet', 'Muguet'], base: ['Ambre', 'Vanille', 'Musc'] },
@@ -303,6 +324,7 @@ MAISONS.forEach((grp) => {
       name: it.name,
       maison: grp.maison,
       idx: DATA.length,
+      image: it.image || null,
       top: it.top || null,
       heart: it.heart || null,
       base: it.base || null,
@@ -361,6 +383,8 @@ class Component extends DCLogic {
       swatchStyle: TONES[p.idx % TONES.length],
       num: 'N° ' + String(p.idx + 1).padStart(2, '0'),
       maisonCaps: p.maison.toUpperCase(),
+      hasImage: !!p.image,
+      noImage: !p.image,
       hasPyramid,
       hasFlatNotes,
       noNotes: !hasPyramid && !hasFlatNotes,
