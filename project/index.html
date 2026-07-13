@@ -169,8 +169,46 @@
           <div style="width:54px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.5), rgba(201,160,92,0));"></div>
         </div>
 
-        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:18px; line-height:1.6; color:#c9beae; max-width:440px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both;">Une signature de la maison {{ selected.maison }}, disponible sur commande.</div>
+        <sc-if value="{{ selected.noNotes }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:18px; line-height:1.6; color:#c9beae; max-width:440px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both;">Une signature de la maison {{ selected.maison }}, disponible sur commande.</div>
+        </sc-if>
       </div>
+
+      <!-- Pyramide olfactive : tête / cœur / fond -->
+      <sc-if value="{{ selected.hasPyramid }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:760px; margin:34px auto 0; padding:0 20px; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px 32px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.45s both;">
+          <div>
+            <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE TÊTE</div>
+            <sc-for list="{{ selected.top }}" as="n" hint-placeholder-count="2">
+              <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
+            </sc-for>
+          </div>
+          <div>
+            <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE CŒUR</div>
+            <sc-for list="{{ selected.heart }}" as="n" hint-placeholder-count="2">
+              <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
+            </sc-for>
+          </div>
+          <div>
+            <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE FOND</div>
+            <sc-for list="{{ selected.base }}" as="n" hint-placeholder-count="2">
+              <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- Composition (liste non hiérarchisée) -->
+      <sc-if value="{{ selected.hasFlatNotes }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:540px; margin:34px auto 0; padding:0 20px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.45s both;">
+          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-left:0.34em;">COMPOSITION</div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:9px 12px; margin-top:20px;">
+            <sc-for list="{{ selected.notes }}" as="n" hint-placeholder-count="5">
+              <span style="font-family:'Cormorant Garamond', serif; font-size:16px; color:#ece5da; border:1px solid rgba(201,160,92,0.22); padding:7px 15px;">{{ n }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
 
       <sc-if value="{{ hasOthers }}" hint-placeholder-val="{{ true }}">
         <div style="max-width:760px; margin:44px auto 0; padding:0 20px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s both;">
@@ -206,30 +244,68 @@ const TONES = [
 ];
 
 // Répertoire IDZ — maison par maison, référence par référence.
+// Un item est soit une chaîne (nom seul, notes à venir), soit un objet
+// { name, top, heart, base }  (pyramide olfactive)  ou  { name, notes } (liste simple).
 const MAISONS = [
   { maison: 'Arts & Odeurs', items: ['Foudre Exotique', 'Sun Rose', 'Dragon Rose', "Sucre d'Antan", 'Vanille Américaine', 'Coco des Îles', 'Musc Fruité', 'Ice Blue'] },
   { maison: 'Maison Maya', items: ['Royal Saffran', 'Suave', 'Réveil Lusitanie', 'Noyau Blanc', 'Place Vendôme'] },
-  { maison: 'Maison Massimo', items: ['La Rose Bleue', 'Gold Signature'] },
-  { maison: 'Ulyka', items: ['Nota Loca', 'Nota Sugar'] },
-  { maison: 'Maison Mataha', items: ['Pêche Velours'] },
-  { maison: 'Giardini di Toscana', items: ['Bianco Latte'] },
-  { maison: 'Al Fanak', items: ['Figue de Tipaza'] },
-  { maison: 'Maison Fraganza', items: ['Rosa Vento', 'Fragamour', 'Cœur Blanc', 'Santal Gourmand'] },
-  { maison: 'Jean Couturier', items: ['Divin Jasmin', 'Vanilla Exotica'] },
-  { maison: 'Maison Berliner', items: ['Sucre Pink', 'Buteur', 'Halim'] },
-  { maison: 'Rosendo Mateu', items: ['RS5', 'RS8'] },
-  { maison: 'Sospiro', items: ['Dolce Melodia'] },
-  { maison: 'Stéphanie de Bruijn', items: ['Mecca Oud'] }
+  { maison: 'Maison Massimo', items: [
+    { name: 'La Rose Bleue', top: ['Orange', 'Citron', 'Bergamote'], heart: ['Notes solaires', 'Fruits secs', 'Guimauve'], base: ['Musc', 'Vanille', 'Ambre'] },
+    { name: 'Gold Signature', top: ['Orange', 'Rhubarbe', 'Bergamote'], heart: ['Framboise', 'Cèdre', 'Notes solaires'], base: ['Patchouli', 'Vanille', 'Ambre gris', 'Musc'] }
+  ] },
+  { maison: 'Ulyka', items: [
+    { name: 'Nota Loca', top: ["Baie d'açaï", 'Coco', 'Yuzu'], heart: ['Papaye', 'Mangue', 'Cardamome'], base: ['Musc', 'Vanille', 'Fève tonka'] },
+    { name: 'Nota Sugar', notes: ['Caramel', 'Ananas', 'Framboise', "Praline d'amande", 'Gousse de vanille', 'Fève tonka', 'Musc', 'Héliotrope'] }
+  ] },
+  { maison: 'Maison Mataha', items: [
+    { name: 'Pêche Velours', top: ['Pêche'], heart: ['Violette', 'Tubéreuse', 'Jasmin'], base: ['Vanille', 'Musc', 'Santal'] }
+  ] },
+  { maison: 'Giardini di Toscana', items: [
+    { name: 'Bianco Latte', top: ['Caramel'], heart: ['Coumarine', 'Miel'], base: ['Vanille', 'Musc blanc'] }
+  ] },
+  { maison: 'Al Fanak', items: [
+    { name: 'Figue de Tipaza', top: ['Figue', 'Fleurs blanches', 'Ylang-ylang'], heart: ['Cannelle', 'Figue', 'Jasmin', 'Ylang-ylang'], base: ['Vanille', 'Santal', 'Cèdre'] }
+  ] },
+  { maison: 'Maison Fragranza', items: [
+    { name: 'Rosa Vento', top: ['Fruits rouges', 'Fruits exotiques'], heart: ['Rose blanche', 'Musc poudré'], base: ['Vanille crémeuse', 'Caramel', 'Musc'] },
+    { name: 'Fragamour', top: ['Poire blanche'], heart: ['Rose de Damas'], base: ['Vanille Bourbon', 'Fève tonka'] },
+    { name: 'Cœur Blanc', top: ['Coco', 'Vanille'], heart: ['Cèdre'], base: ['Musc blanc'] },
+    { name: 'Santal Gourmand', top: ["Fleur d'iris", 'Bois de santal'], heart: ['Ambre gris'], base: ['Vanille'] }
+  ] },
+  { maison: 'Jean Couturier', items: [
+    { name: 'Divin Jasmin', top: ['Vanille', 'Miel', 'Musc'], heart: ['Ylang-ylang', 'Jasmin', 'Mimosa'], base: ['Baies rouges', 'Orange sanguine', 'Bergamote'] },
+    { name: 'Vanilla Exotica', top: ['Vanille', 'Coco', 'Pêche'], heart: ['Jasmin', 'Tiaré'], base: ['Notes boisées', 'Musc'] }
+  ] },
+  { maison: 'Maison Berliner', items: [
+    { name: 'Sucre Pink', top: ['Framboise', 'Coco'], heart: ['Caramel', 'Sucre roux'], base: ['Musc', 'Rose'] },
+    { name: 'Buteur', top: ['Orange', 'Citron de Sicile', 'Bergamote de Calabre'], heart: ['Fruits'], base: ['Musc blanc', 'Vanille de Madagascar', 'Ambre'] },
+    { name: 'Halim', top: ['Sucre roux'], heart: ['Vanille'], base: ['Orchidée'] }
+  ] },
+  { maison: 'Rosendo Mateu', items: [
+    { name: 'RS5', top: ['Épices', 'Notes florales exotiques'], heart: ['Œillet', 'Muguet'], base: ['Ambre', 'Vanille', 'Musc'] },
+    { name: 'RS8', top: ['Ananas', 'Pomme', 'Poire', 'Agrumes'], heart: ['Cannelle', 'Patchouli', 'Iris', 'Rose de Bulgarie', 'Ambre'], base: ['Vanille', 'Cèdre', 'Bois de gaïac', 'Vétiver'] }
+  ] },
+  { maison: 'Sospiro', items: [
+    { name: 'Dolce Melodia', top: ['Mandarine', 'Orange', 'Safran'], heart: ['Poire', 'Cassis', 'Gardénia', 'Jasmin', 'Rose'], base: ['Musc blanc', 'Vanille', 'Santal'] }
+  ] },
+  { maison: 'Stéphanie de Bruijn', items: [
+    { name: 'Mecca Oud', top: ['Bois nobles'], heart: ['Encens'], base: ['Musc'] }
+  ] }
 ];
 
 const DATA = [];
 MAISONS.forEach((grp) => {
-  grp.items.forEach((name) => {
+  grp.items.forEach((raw) => {
+    const it = typeof raw === 'string' ? { name: raw } : raw;
     DATA.push({
       id: 'ref-' + DATA.length,
-      name,
+      name: it.name,
       maison: grp.maison,
-      idx: DATA.length
+      idx: DATA.length,
+      top: it.top || null,
+      heart: it.heart || null,
+      base: it.base || null,
+      notes: it.notes || null
     });
   });
 });
@@ -273,11 +349,20 @@ class Component extends DCLogic {
   openDetail = (id) => this.setState({ view: 'detail', selectedId: id });
 
   buildCard(p) {
+    const hasPyramid = !!((p.top && p.top.length) || (p.heart && p.heart.length) || (p.base && p.base.length));
+    const hasFlatNotes = !hasPyramid && !!(p.notes && p.notes.length);
     return {
       ...p,
+      top: p.top || [],
+      heart: p.heart || [],
+      base: p.base || [],
+      notes: p.notes || [],
       swatchStyle: TONES[p.idx % TONES.length],
       num: 'N° ' + String(p.idx + 1).padStart(2, '0'),
       maisonCaps: p.maison.toUpperCase(),
+      hasPyramid,
+      hasFlatNotes,
+      noNotes: !hasPyramid && !hasFlatNotes,
       open: () => this.openDetail(p.id)
     };
   }
