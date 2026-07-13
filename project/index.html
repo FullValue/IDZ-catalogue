@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; background:#080706; }
+    a { color:#c9a05c; text-decoration:none; }
+    a:hover { color:#e8c98a; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(14px);} to { opacity:1; transform:translateY(0);} }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes sparkFly { 0% { transform:translate(-50%,-50%) translate(0,0) scale(1); opacity:1; } 70% { opacity:0.9; } 100% { transform:translate(-50%,-50%) translate(var(--dx), var(--dy)) scale(0.1); opacity:0; } }
+    @keyframes glowBurst { 0% { transform:translate(-50%,-50%) scale(0.1); opacity:0; } 25% { opacity:0.9; } 100% { transform:translate(-50%,-50%) scale(3.8); opacity:0; } }
+    @keyframes keyholePulse { 0%,100% { box-shadow:0 0 4px rgba(201,160,92,0.35);} 50% { box-shadow:0 0 14px rgba(232,201,138,0.85);} }
+    @keyframes seamGlow { 0%,100% { opacity:0.3; } 50% { opacity:0.75; } }
+    @keyframes ringBreathe { 0%,100% { transform:scale(1); opacity:0.5; } 50% { transform:scale(1.04); opacity:0.9; } }
+    .no-scrollbar::-webkit-scrollbar { display:none; }
+  </style>
+</helmet>
+
+<div style="background:radial-gradient(1100px 500px at 50% -8%, rgba(201,160,92,0.06), transparent 70%), #080706; min-height:100vh; color:#ece5da; font-family:'Cormorant Garamond', serif; -webkit-font-smoothing:antialiased;">
+
+  <!-- ═══ PRÉLOADER — coffre aux trésors ═══ -->
+  <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed; inset:0; z-index:999; background:#080706; overflow:hidden;">
+      <div style="{{ lidLeftStyle }}"></div>
+      <div style="{{ lidRightStyle }}"></div>
+      <div style="{{ seamStyle }}"></div>
+      <div style="{{ glowBurstStyle }}"></div>
+      <sc-if value="{{ opening }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ sparks }}" as="s" hint-placeholder-count="0">
+          <div style="{{ s.style }}"></div>
+        </sc-for>
+      </sc-if>
+
+      <div style="{{ centerStyle }}">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:26px;">
+          <div style="position:relative; width:104px; height:104px; display:flex; align-items:center; justify-content:center;">
+            <div style="position:absolute; inset:0; border-radius:50%; border:1px solid rgba(201,160,92,0.28); animation:ringBreathe 4s ease-in-out infinite;"></div>
+            <div style="width:82px; height:82px; border-radius:50%; background:#0e0c09; border:1px solid rgba(201,160,92,0.5); display:flex; align-items:center; justify-content:center;">
+              <span style="font-family:'Cormorant Garamond', serif; font-weight:600; font-size:28px; color:#c9a05c; line-height:1;">IDZ</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:7px;">
+            <span style="font-family:'Cormorant Garamond', serif; font-size:24px; letter-spacing:0.26em; color:#ece5da; margin-left:0.26em;">IDZ</span>
+            <span style="font-size:9px; letter-spacing:0.52em; color:#9a8f80; font-family:'Jost', sans-serif; margin-left:0.52em;">FRAGRANCES</span>
+            <div style="width:38px; height:1px; background:rgba(201,160,92,0.5); margin-top:4px;"></div>
+          </div>
+
+          <div style="{{ lockWrapStyle }}">
+            <div style="{{ shackleStyle }}"></div>
+            <div style="width:46px; height:34px; border:1px solid rgba(201,160,92,0.7); background:linear-gradient(165deg, rgba(201,160,92,0.1), rgba(0,0,0,0)); border-radius:2px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+              <div style="width:7px; height:7px; border-radius:50%; background:#c9a05c; animation:keyholePulse 2.4s ease-in-out infinite;"></div>
+              <div style="width:2px; height:7px; background:#c9a05c; margin-top:-1px;"></div>
+            </div>
+          </div>
+
+          <button onClick="{{ openChest }}" style="margin-top:6px; background:transparent; border:1px solid rgba(201,160,92,0.4); color:#d8b97c; font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.38em; padding:15px 32px 15px 34px; cursor:pointer; transition:background 0.5s ease, border-color 0.5s ease, color 0.5s ease;" style-hover="{{ ctaHover }}">OUVRIR LE COFFRE</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ═══ EN-TÊTE ═══ -->
+  <div onClick="{{ goHome }}" style="position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:center; padding:15px 18px 13px; background:linear-gradient(180deg, rgba(8,7,6,0.97), rgba(8,7,6,0.86)); backdrop-filter:blur(8px); border-bottom:1px solid rgba(201,160,92,0.16); cursor:pointer;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div style="width:32px; height:32px; border-radius:50%; background:#0e0c09; border:1px solid rgba(201,160,92,0.5); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span style="font-family:'Cormorant Garamond', serif; font-weight:600; font-size:13px; color:#c9a05c; line-height:1;">IDZ</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.1;">
+        <span style="font-family:'Cormorant Garamond', serif; font-size:16px; letter-spacing:0.2em; color:#ece5da;">IDZ</span>
+        <span style="font-size:7.5px; letter-spacing:0.4em; color:#9a8f80; font-family:'Jost', sans-serif;">FRAGRANCES</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ACCUEIL ═══ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:30px 20px 50px;">
+      <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:15px; margin:16px 0 44px;">
+        <div style="display:flex; align-items:center; gap:16px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.05s both;">
+          <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0), rgba(201,160,92,0.55));"></div>
+          <span style="font-size:10px; letter-spacing:0.46em; color:#c9a05c; font-family:'Jost', sans-serif; margin-left:0.46em;">LA COLLECTION</span>
+          <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.55), rgba(201,160,92,0));"></div>
+        </div>
+        <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(36px,9vw,58px); color:#f2ead9; letter-spacing:0.02em; line-height:1.04; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;">Le Répertoire</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:440px; line-height:1.55; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;">Huit signatures olfactives, présentées référence par référence — ouvrez une fiche pour découvrir sa composition.</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(164px,1fr)); gap:34px 20px; max-width:940px; margin:0 auto;">
+        <sc-for list="{{ perfumes }}" as="p" hint-placeholder-count="8">
+          <div onClick="{{ p.open }}" style="cursor:pointer; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);" style-hover="{{ cardHover }}">
+            <div style="{{ p.revealStyle }}">
+              <div style="display:flex; flex-direction:column; gap:14px; text-align:center;">
+                <div style="border:1px solid rgba(201,160,92,0.24); padding:8px; transition:border-color 0.5s ease, box-shadow 0.5s ease;">
+                  <div style="{{ p.swatchStyle }} aspect-ratio:4/5; position:relative; overflow:hidden;">
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+                      <div style="width:24px; height:38px; border:1px solid rgba(255,255,255,0.3); border-radius:3px 3px 6px 6px;"></div>
+                      <span style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
+                    </div>
+                    <div style="position:absolute; top:11px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ p.num }}</div>
+                  </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                  <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:20px; color:#f2ead9; line-height:1.12;">{{ p.name }}</div>
+                  <div style="font-family:'Jost', sans-serif; font-size:8.5px; letter-spacing:0.26em; color:#c9a05c; margin-left:0.26em;">{{ p.familyCaps }}</div>
+                  <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:13px; color:#7d7264;">{{ p.ml }} ml</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin-top:72px;">
+        <div style="width:40px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0), rgba(201,160,92,0.4));"></div>
+        <div style="width:4px; height:4px; background:rgba(201,160,92,0.6); transform:rotate(45deg);"></div>
+        <div style="width:40px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.4), rgba(201,160,92,0));"></div>
+      </div>
+      <div style="text-align:center; margin-top:14px; font-family:'Jost', sans-serif; font-size:8.5px; letter-spacing:0.4em; color:#6e6355; margin-left:0.4em;">IDZ FRAGRANCES — MMXXVI</div>
+    </div>
+  </sc-if>
+
+  <!-- ═══ FICHE RÉFÉRENCE ═══ -->
+  <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+    <div style="padding-bottom:60px;">
+      <div style="padding:20px 20px 0; max-width:940px; margin:0 auto; animation:fadeIn 0.5s ease both;">
+        <button onClick="{{ goHome }}" style="background:none; border:1px solid rgba(201,160,92,0.32); color:#c9a05c; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.28em; padding:10px 18px; cursor:pointer; transition:background 0.4s ease, border-color 0.4s ease;" style-hover="{{ ctaHover }}">← LA COLLECTION</button>
+      </div>
+
+      <div style="padding:30px 20px 8px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:20px;">
+        <div style="border:1px solid rgba(201,160,92,0.3); padding:10px; box-shadow:0 28px 70px rgba(0,0,0,0.6); animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.05s both;">
+          <div style="{{ selected.swatchStyle }} width:min(56vw,230px); aspect-ratio:4/5; position:relative; overflow:hidden;">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:9px;">
+              <div style="width:36px; height:56px; border:1px solid rgba(255,255,255,0.3); border-radius:5px 5px 10px 10px;"></div>
+              <span style="font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
+            </div>
+            <div style="position:absolute; top:12px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ selected.num }}</div>
+          </div>
+        </div>
+
+        <div style="animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;">
+          <div style="font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.4em; color:#c9a05c; margin-bottom:12px; margin-left:0.4em;">{{ selected.familyCaps }}</div>
+          <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(34px,9vw,52px); color:#f2ead9; line-height:1.04;">{{ selected.name }}</div>
+          <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:14px; color:#8d8172; margin-top:10px;">{{ selected.ml }} ml — Eau de Parfum</div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:13px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;">
+          <div style="width:54px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0), rgba(201,160,92,0.5));"></div>
+          <div style="width:5px; height:5px; background:#c9a05c; transform:rotate(45deg);"></div>
+          <div style="width:54px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.5), rgba(201,160,92,0));"></div>
+        </div>
+
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:18px; line-height:1.6; color:#c9beae; max-width:440px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both;">{{ selected.desc }}</div>
+      </div>
+
+      <div style="max-width:760px; margin:34px auto 0; padding:0 20px; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px 32px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.45s both;">
+        <div>
+          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE TÊTE</div>
+          <sc-for list="{{ selected.top }}" as="n" hint-placeholder-count="2">
+            <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
+          </sc-for>
+        </div>
+        <div>
+          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE CŒUR</div>
+          <sc-for list="{{ selected.heart }}" as="n" hint-placeholder-count="2">
+            <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
+          </sc-for>
+        </div>
+        <div>
+          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE FOND</div>
+          <sc-for list="{{ selected.base }}" as="n" hint-placeholder-count="2">
+            <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="max-width:760px; margin:44px auto 0; padding:0 20px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.55s both;">
+        <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#9a8f80; text-align:center; margin-bottom:18px; margin-left:0.34em;">AUTRES RÉFÉRENCES</div>
+        <div class="no-scrollbar" style="display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; scrollbar-width:none; -webkit-overflow-scrolling:touch;">
+          <sc-for list="{{ others }}" as="p" hint-placeholder-count="4">
+            <div onClick="{{ p.open }}" style="cursor:pointer; flex:0 0 auto; width:124px; scroll-snap-align:start; display:flex; flex-direction:column; gap:9px; text-align:center; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);" style-hover="{{ cardHover }}">
+              <div style="border:1px solid rgba(201,160,92,0.2); padding:5px;">
+                <div style="{{ p.swatchStyle }} aspect-ratio:4/5;"></div>
+              </div>
+              <span style="font-family:'Cormorant Garamond', serif; font-size:14px; color:#ece5da;">{{ p.name }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;skipLoader&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Préloader&quot;}, &quot;sparkCount&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 26, &quot;min&quot;: 8, &quot;max&quot;: 48, &quot;step&quot;: 2, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Préloader&quot;}}">
+const TONES = [
+  'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.14), transparent 65%), linear-gradient(150deg,#241a10,#0d0906 62%);',
+  'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.1), transparent 65%), linear-gradient(150deg,#1c1512,#0a0807 62%);',
+  'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.16), transparent 65%), linear-gradient(150deg,#2a1f12,#100c07 62%);',
+  'background:radial-gradient(circle at 50% 28%, rgba(180,180,195,0.1), transparent 65%), linear-gradient(150deg,#1a1a1c,#0a0a0b 62%);',
+  'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.12), transparent 65%), linear-gradient(150deg,#221812,#0c0908 62%);',
+  'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.15), transparent 65%), linear-gradient(150deg,#241d14,#0e0b07 62%);',
+  'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.09), transparent 65%), linear-gradient(150deg,#1e1712,#0b0908 62%);',
+  'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.13), transparent 65%), linear-gradient(150deg,#251a13,#0d0907 62%);'
+];
+
+const DATA = [
+  { id:'noir-santal', name:'Noir Santal', family:'Boisé Oriental', ml:75,
+    desc:"Un sillage boisé enveloppant, entre bois de santal fumé et une pointe d'ambre chaud.",
+    top:['Bergamote','Poivre rose'], heart:['Santal','Cuir'], base:['Ambre','Fève tonka'] },
+  { id:'ivoire-fleur', name:'Ivoire Fleur', family:'Floral Musqué', ml:50,
+    desc:"Une composition florale lumineuse, portée par un musc blanc délicat et une touche de pivoine.",
+    top:['Mandarine','Poire'], heart:['Pivoine','Jasmin'], base:['Musc blanc','Bois de cachemire'] },
+  { id:'ambre-royal', name:'Ambre Royal', family:'Oriental Épicé', ml:100,
+    desc:"Un oriental dense et solaire, réchauffé par la cannelle et sublimé par un fond d'ambre gris.",
+    top:['Cannelle','Cardamome'], heart:['Rose','Encens'], base:['Ambre gris','Vanille'] },
+  { id:'cuir-fume', name:'Cuir Fumé', family:'Cuir Boisé', ml:75,
+    desc:"Un cuir fumé et minéral, structuré par le vétiver et adouci par un patchouli profond.",
+    top:['Cardamome noire','Safran'], heart:['Cuir','Vétiver'], base:['Patchouli','Oud'] },
+  { id:'jasmin-nuit', name:'Jasmin de Nuit', family:'Floral Oriental', ml:50,
+    desc:"Un floral nocturne et sensuel, où le jasmin sambac rencontre une vanille bourbon veloutée.",
+    top:['Bergamote','Fruits rouges'], heart:['Jasmin sambac','Tubéreuse'], base:['Vanille','Musc'] },
+  { id:'vetiver-gris', name:'Vétiver Gris', family:'Boisé Aromatique', ml:100,
+    desc:"Un boisé sec et racé, tout en fraîcheur minérale, porté par un vétiver terreux.",
+    top:['Pamplemousse','Sauge'], heart:['Vétiver','Iris'], base:['Cèdre','Mousse de chêne'] },
+  { id:'rose-epicee', name:'Rose Épicée', family:'Floral Épicé', ml:75,
+    desc:"Une rose de Damas réchauffée par le poivre noir et enveloppée d'un fond boisé discret.",
+    top:['Poivre noir','Litchi'], heart:['Rose de Damas','Œillet'], base:['Patchouli','Santal'] },
+  { id:'oud-imperial', name:'Oud Impérial', family:'Boisé Oriental', ml:100,
+    desc:"Une signature dense et précieuse, oud profond, épices chaudes et résines ambrées.",
+    top:['Safran','Cardamome'], heart:['Oud','Rose'], base:['Ambre','Benjoin'] }
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      view: 'home',
+      selectedId: DATA[0].id,
+      loading: !(props && props.skipLoader),
+      opening: false
+    };
+    const count = Math.round((props && props.sparkCount) || 26);
+    this._sparks = Array.from({ length: count }, (_, i) => {
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.4;
+      const dist = 70 + Math.random() * 190;
+      const size = 1.5 + Math.random() * 2.5;
+      const delay = 0.45 + Math.random() * 0.4;
+      const dur = 0.9 + Math.random() * 0.7;
+      return {
+        id: i,
+        style: {
+          position: 'absolute', left: '50%', top: '50%', zIndex: 5, pointerEvents: 'none',
+          width: size + 'px', height: size + 'px', borderRadius: '50%',
+          background: '#ecd9ae', boxShadow: '0 0 8px 1px rgba(201,160,92,0.75)',
+          '--dx': Math.cos(angle) * dist + 'px',
+          '--dy': Math.sin(angle) * dist + 'px',
+          animation: 'sparkFly ' + dur.toFixed(2) + 's cubic-bezier(0.16,0.8,0.3,1) ' + delay.toFixed(2) + 's both'
+        }
+      };
+    });
+  }
+
+  openChest = () => {
+    this.setState({ opening: true });
+    setTimeout(() => this.setState({ loading: false }), 2200);
+  };
+
+  goHome = () => this.setState({ view: 'home' });
+  openDetail = (id) => this.setState({ view: 'detail', selectedId: id });
+
+  buildCard(p, i) {
+    return {
+      ...p,
+      swatchStyle: TONES[i % TONES.length],
+      num: 'N° ' + String(i + 1).padStart(2, '0'),
+      familyCaps: p.family.toUpperCase(),
+      revealStyle: {
+        animation: 'fadeUp 0.85s cubic-bezier(0.22,1,0.36,1) both',
+        animationDelay: (0.35 + i * 0.07).toFixed(2) + 's'
+      },
+      open: () => this.openDetail(p.id)
+    };
+  }
+
+  renderVals() {
+    const opening = this.state.opening;
+
+    const lidBase = {
+      position: 'absolute', top: 0, bottom: 0, width: '50%', zIndex: 1,
+      transition: 'transform 1.35s cubic-bezier(0.85,0,0.15,1) 0.55s',
+      backgroundColor: '#120e09'
+    };
+    const lidLeftStyle = {
+      ...lidBase, left: 0,
+      background: 'linear-gradient(115deg,#1a140e,#090705 72%)',
+      boxShadow: 'inset -40px 0 80px rgba(0,0,0,0.65)',
+      transform: opening ? 'translateX(-101%)' : 'translateX(0)'
+    };
+    const lidRightStyle = {
+      ...lidBase, right: 0,
+      background: 'linear-gradient(245deg,#1a140e,#090705 72%)',
+      boxShadow: 'inset 40px 0 80px rgba(0,0,0,0.65)',
+      transform: opening ? 'translateX(101%)' : 'translateX(0)'
+    };
+    const seamStyle = opening ? {
+      position: 'absolute', top: 0, bottom: 0, left: '50%', width: '3px', zIndex: 3, marginLeft: '-1.5px',
+      background: 'linear-gradient(rgba(236,217,174,0), rgba(236,217,174,0.95), rgba(236,217,174,0))',
+      boxShadow: '0 0 60px 14px rgba(201,160,92,0.5)',
+      opacity: 0,
+      transition: 'opacity 1.2s ease 0.9s'
+    } : {
+      position: 'absolute', top: 0, bottom: 0, left: '50%', width: '1px', zIndex: 3,
+      background: 'linear-gradient(rgba(201,160,92,0), rgba(201,160,92,0.5), rgba(201,160,92,0))',
+      animation: 'seamGlow 3.5s ease-in-out infinite'
+    };
+    const glowBurstStyle = opening ? {
+      position: 'absolute', left: '50%', top: '50%', width: '300px', height: '300px', zIndex: 4,
+      borderRadius: '50%', pointerEvents: 'none',
+      background: 'radial-gradient(circle, rgba(236,217,174,0.55), rgba(201,160,92,0.16) 45%, transparent 70%)',
+      animation: 'glowBurst 1.6s ease-out 0.4s both'
+    } : { display: 'none' };
+    const centerStyle = {
+      position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2,
+      pointerEvents: opening ? 'none' : 'auto',
+      opacity: opening ? 0 : 1,
+      transition: 'opacity 0.7s ease 0.2s'
+    };
+    const lockWrapStyle = {
+      marginTop: '2px',
+      transition: 'transform 0.7s ease 0.25s, opacity 0.7s ease 0.25s, filter 0.5s ease',
+      transform: opening ? 'scale(1.4)' : 'scale(1)',
+      opacity: opening ? 0 : 1,
+      filter: opening ? 'drop-shadow(0 0 16px rgba(236,217,174,0.9))' : 'none'
+    };
+    const shackleStyle = {
+      width: '22px', height: '20px',
+      border: '2px solid #c9a05c', borderBottom: 'none',
+      borderRadius: '12px 12px 0 0',
+      margin: '0 auto',
+      transformOrigin: '100% 100%',
+      transition: 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)',
+      transform: opening ? 'translateY(-5px) rotate(-24deg)' : 'none'
+    };
+
+    const perfumes = DATA.map((p, i) => this.buildCard(p, i));
+    const selIdx = DATA.findIndex(p => p.id === this.state.selectedId);
+    const selected = this.buildCard(DATA[selIdx], selIdx);
+    const others = DATA
+      .map((p, i) => ({ p, i }))
+      .filter(({ p }) => p.id !== this.state.selectedId)
+      .map(({ p, i }) => this.buildCard(p, i));
+
+    return {
+      isLoading: this.state.loading,
+      isHome: this.state.view === 'home',
+      isDetail: this.state.view === 'detail',
+      opening,
+      sparks: this._sparks,
+      openChest: this.openChest,
+      goHome: this.goHome,
+      lidLeftStyle, lidRightStyle, seamStyle, glowBurstStyle, centerStyle, lockWrapStyle, shackleStyle,
+      ctaHover: { background: 'rgba(201,160,92,0.14)', borderColor: 'rgba(201,160,92,0.75)', color: '#ecd9ae' },
+      cardHover: { transform: 'translateY(-5px)' },
+      perfumes, selected, others
+    };
+  }
+}
+
+</script>
+</body>
+</html>
