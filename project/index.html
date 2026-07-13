@@ -84,36 +84,47 @@
   <!-- ═══ ACCUEIL ═══ -->
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div style="padding:30px 20px 50px;">
-      <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:15px; margin:16px 0 44px;">
+      <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:15px; margin:16px 0 50px;">
         <div style="display:flex; align-items:center; gap:16px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.05s both;">
           <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0), rgba(201,160,92,0.55));"></div>
           <span style="font-size:10px; letter-spacing:0.46em; color:#c9a05c; font-family:'Jost', sans-serif; margin-left:0.46em;">LA COLLECTION</span>
           <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.55), rgba(201,160,92,0));"></div>
         </div>
         <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(36px,9vw,58px); color:#f2ead9; letter-spacing:0.02em; line-height:1.04; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;">Le Répertoire</div>
-        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:440px; line-height:1.55; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;">Huit signatures olfactives, présentées référence par référence — ouvrez une fiche pour découvrir sa composition.</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;">Treize maisons, trente-trois signatures — parcourez la collection maison par maison, et ouvrez une fiche pour chaque référence.</div>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(164px,1fr)); gap:34px 20px; max-width:940px; margin:0 auto;">
-        <sc-for list="{{ perfumes }}" as="p" hint-placeholder-count="8">
-          <div onClick="{{ p.open }}" style="cursor:pointer; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);" style-hover="{{ cardHover }}">
-            <div style="{{ p.revealStyle }}">
-              <div style="display:flex; flex-direction:column; gap:14px; text-align:center;">
-                <div style="border:1px solid rgba(201,160,92,0.24); padding:8px; transition:border-color 0.5s ease, box-shadow 0.5s ease;">
-                  <div style="{{ p.swatchStyle }} aspect-ratio:4/5; position:relative; overflow:hidden;">
-                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
-                      <div style="width:24px; height:38px; border:1px solid rgba(255,255,255,0.3); border-radius:3px 3px 6px 6px;"></div>
-                      <span style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
+      <div style="max-width:940px; margin:0 auto; display:flex; flex-direction:column; gap:58px;">
+        <sc-for list="{{ maisonGroups }}" as="m" hint-placeholder-count="4">
+          <div style="{{ m.revealStyle }}">
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:9px; margin-bottom:28px;">
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:32px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0), rgba(201,160,92,0.5));"></div>
+                <span style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:25px; letter-spacing:0.03em; color:#f2ead9; line-height:1.1;">{{ m.maison }}</span>
+                <div style="width:32px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.5), rgba(201,160,92,0));"></div>
+              </div>
+              <span style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.4em; color:#8a7f70; margin-left:0.4em;">{{ m.countLabel }}</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(148px,1fr)); gap:30px 18px;">
+              <sc-for list="{{ m.items }}" as="p" hint-placeholder-count="4">
+                <div onClick="{{ p.open }}" style="cursor:pointer; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);" style-hover="{{ cardHover }}">
+                  <div style="display:flex; flex-direction:column; gap:12px; text-align:center;">
+                    <div style="border:1px solid rgba(201,160,92,0.24); padding:8px;">
+                      <div style="{{ p.swatchStyle }} aspect-ratio:4/5; position:relative; overflow:hidden;">
+                        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+                          <div style="width:24px; height:38px; border:1px solid rgba(255,255,255,0.3); border-radius:3px 3px 6px 6px;"></div>
+                          <span style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
+                        </div>
+                        <div style="position:absolute; top:11px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ p.num }}</div>
+                      </div>
                     </div>
-                    <div style="position:absolute; top:11px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ p.num }}</div>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                      <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:19px; color:#f2ead9; line-height:1.14;">{{ p.name }}</div>
+                      <div style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.24em; color:#c9a05c; margin-left:0.24em;">EAU DE PARFUM</div>
+                    </div>
                   </div>
                 </div>
-                <div style="display:flex; flex-direction:column; gap:5px;">
-                  <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:20px; color:#f2ead9; line-height:1.12;">{{ p.name }}</div>
-                  <div style="font-family:'Jost', sans-serif; font-size:8.5px; letter-spacing:0.26em; color:#c9a05c; margin-left:0.26em;">{{ p.familyCaps }}</div>
-                  <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:13px; color:#7d7264;">{{ p.ml }} ml</div>
-                </div>
-              </div>
+              </sc-for>
             </div>
           </div>
         </sc-for>
@@ -147,9 +158,9 @@
         </div>
 
         <div style="animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;">
-          <div style="font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.4em; color:#c9a05c; margin-bottom:12px; margin-left:0.4em;">{{ selected.familyCaps }}</div>
+          <div style="font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.4em; color:#c9a05c; margin-bottom:12px; margin-left:0.4em;">{{ selected.maisonCaps }}</div>
           <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(34px,9vw,52px); color:#f2ead9; line-height:1.04;">{{ selected.name }}</div>
-          <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:14px; color:#8d8172; margin-top:10px;">{{ selected.ml }} ml — Eau de Parfum</div>
+          <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:14px; color:#8d8172; margin-top:10px;">Eau de Parfum</div>
         </div>
 
         <div style="display:flex; align-items:center; gap:13px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;">
@@ -158,43 +169,24 @@
           <div style="width:54px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.5), rgba(201,160,92,0));"></div>
         </div>
 
-        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:18px; line-height:1.6; color:#c9beae; max-width:440px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both;">{{ selected.desc }}</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:18px; line-height:1.6; color:#c9beae; max-width:440px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both;">Une signature de la maison {{ selected.maison }}, disponible sur commande.</div>
       </div>
 
-      <div style="max-width:760px; margin:34px auto 0; padding:0 20px; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px 32px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.45s both;">
-        <div>
-          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE TÊTE</div>
-          <sc-for list="{{ selected.top }}" as="n" hint-placeholder-count="2">
-            <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
-          </sc-for>
-        </div>
-        <div>
-          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE CŒUR</div>
-          <sc-for list="{{ selected.heart }}" as="n" hint-placeholder-count="2">
-            <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
-          </sc-for>
-        </div>
-        <div>
-          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#c9a05c; text-align:center; border-bottom:1px solid rgba(201,160,92,0.18); padding-bottom:11px; margin-bottom:6px; margin-left:0.34em;">NOTES DE FOND</div>
-          <sc-for list="{{ selected.base }}" as="n" hint-placeholder-count="2">
-            <div style="font-family:'Cormorant Garamond', serif; font-size:17px; color:#ece5da; text-align:center; padding:9px 0; border-bottom:1px solid rgba(201,160,92,0.08);">{{ n }}</div>
-          </sc-for>
-        </div>
-      </div>
-
-      <div style="max-width:760px; margin:44px auto 0; padding:0 20px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.55s both;">
-        <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#9a8f80; text-align:center; margin-bottom:18px; margin-left:0.34em;">AUTRES RÉFÉRENCES</div>
-        <div class="no-scrollbar" style="display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; scrollbar-width:none; -webkit-overflow-scrolling:touch;">
-          <sc-for list="{{ others }}" as="p" hint-placeholder-count="4">
-            <div onClick="{{ p.open }}" style="cursor:pointer; flex:0 0 auto; width:124px; scroll-snap-align:start; display:flex; flex-direction:column; gap:9px; text-align:center; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);" style-hover="{{ cardHover }}">
-              <div style="border:1px solid rgba(201,160,92,0.2); padding:5px;">
-                <div style="{{ p.swatchStyle }} aspect-ratio:4/5;"></div>
+      <sc-if value="{{ hasOthers }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:760px; margin:44px auto 0; padding:0 20px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s both;">
+          <div style="font-family:'Jost', sans-serif; font-size:9.5px; letter-spacing:0.34em; color:#9a8f80; text-align:center; margin-bottom:18px; margin-left:0.34em;">AUTRES RÉFÉRENCES — {{ selected.maisonCaps }}</div>
+          <div class="no-scrollbar" style="display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; scrollbar-width:none; -webkit-overflow-scrolling:touch; justify-content:center;">
+            <sc-for list="{{ others }}" as="p" hint-placeholder-count="4">
+              <div onClick="{{ p.open }}" style="cursor:pointer; flex:0 0 auto; width:124px; scroll-snap-align:start; display:flex; flex-direction:column; gap:9px; text-align:center; transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);" style-hover="{{ cardHover }}">
+                <div style="border:1px solid rgba(201,160,92,0.2); padding:5px;">
+                  <div style="{{ p.swatchStyle }} aspect-ratio:4/5;"></div>
+                </div>
+                <span style="font-family:'Cormorant Garamond', serif; font-size:14px; color:#ece5da;">{{ p.name }}</span>
               </div>
-              <span style="font-family:'Cormorant Garamond', serif; font-size:14px; color:#ece5da;">{{ p.name }}</span>
-            </div>
-          </sc-for>
+            </sc-for>
+          </div>
         </div>
-      </div>
+      </sc-if>
     </div>
   </sc-if>
 
@@ -213,32 +205,34 @@ const TONES = [
   'background:radial-gradient(circle at 50% 28%, rgba(201,160,92,0.13), transparent 65%), linear-gradient(150deg,#251a13,#0d0907 62%);'
 ];
 
-const DATA = [
-  { id:'noir-santal', name:'Noir Santal', family:'Boisé Oriental', ml:75,
-    desc:"Un sillage boisé enveloppant, entre bois de santal fumé et une pointe d'ambre chaud.",
-    top:['Bergamote','Poivre rose'], heart:['Santal','Cuir'], base:['Ambre','Fève tonka'] },
-  { id:'ivoire-fleur', name:'Ivoire Fleur', family:'Floral Musqué', ml:50,
-    desc:"Une composition florale lumineuse, portée par un musc blanc délicat et une touche de pivoine.",
-    top:['Mandarine','Poire'], heart:['Pivoine','Jasmin'], base:['Musc blanc','Bois de cachemire'] },
-  { id:'ambre-royal', name:'Ambre Royal', family:'Oriental Épicé', ml:100,
-    desc:"Un oriental dense et solaire, réchauffé par la cannelle et sublimé par un fond d'ambre gris.",
-    top:['Cannelle','Cardamome'], heart:['Rose','Encens'], base:['Ambre gris','Vanille'] },
-  { id:'cuir-fume', name:'Cuir Fumé', family:'Cuir Boisé', ml:75,
-    desc:"Un cuir fumé et minéral, structuré par le vétiver et adouci par un patchouli profond.",
-    top:['Cardamome noire','Safran'], heart:['Cuir','Vétiver'], base:['Patchouli','Oud'] },
-  { id:'jasmin-nuit', name:'Jasmin de Nuit', family:'Floral Oriental', ml:50,
-    desc:"Un floral nocturne et sensuel, où le jasmin sambac rencontre une vanille bourbon veloutée.",
-    top:['Bergamote','Fruits rouges'], heart:['Jasmin sambac','Tubéreuse'], base:['Vanille','Musc'] },
-  { id:'vetiver-gris', name:'Vétiver Gris', family:'Boisé Aromatique', ml:100,
-    desc:"Un boisé sec et racé, tout en fraîcheur minérale, porté par un vétiver terreux.",
-    top:['Pamplemousse','Sauge'], heart:['Vétiver','Iris'], base:['Cèdre','Mousse de chêne'] },
-  { id:'rose-epicee', name:'Rose Épicée', family:'Floral Épicé', ml:75,
-    desc:"Une rose de Damas réchauffée par le poivre noir et enveloppée d'un fond boisé discret.",
-    top:['Poivre noir','Litchi'], heart:['Rose de Damas','Œillet'], base:['Patchouli','Santal'] },
-  { id:'oud-imperial', name:'Oud Impérial', family:'Boisé Oriental', ml:100,
-    desc:"Une signature dense et précieuse, oud profond, épices chaudes et résines ambrées.",
-    top:['Safran','Cardamome'], heart:['Oud','Rose'], base:['Ambre','Benjoin'] }
+// Répertoire IDZ — maison par maison, référence par référence.
+const MAISONS = [
+  { maison: 'Arts & Odeurs', items: ['Foudre Exotique', 'Sun Rose', 'Dragon Rose', "Sucre d'Antan", 'Vanille Américaine', 'Coco des Îles', 'Musc Fruité', 'Ice Blue'] },
+  { maison: 'Maison Maya', items: ['Royal Saffran', 'Suave', 'Réveil Lusitanie', 'Noyau Blanc', 'Place Vendôme'] },
+  { maison: 'Maison Massimo', items: ['La Rose Bleue', 'Gold Signature'] },
+  { maison: 'Ulyka', items: ['Nota Loca', 'Nota Sugar'] },
+  { maison: 'Maison Mataha', items: ['Pêche Velours'] },
+  { maison: 'Giardini di Toscana', items: ['Bianco Latte'] },
+  { maison: 'Al Fanak', items: ['Figue de Tipaza'] },
+  { maison: 'Maison Fraganza', items: ['Rosa Vento', 'Fragamour', 'Cœur Blanc', 'Santal Gourmand'] },
+  { maison: 'Jean Couturier', items: ['Divin Jasmin', 'Vanilla Exotica'] },
+  { maison: 'Maison Berliner', items: ['Sucre Pink', 'Buteur', 'Halim'] },
+  { maison: 'Rosendo Mateu', items: ['RS5', 'RS8'] },
+  { maison: 'Sospiro', items: ['Dolce Melodia'] },
+  { maison: 'Stéphanie de Bruijn', items: ['Mecca Oud'] }
 ];
+
+const DATA = [];
+MAISONS.forEach((grp) => {
+  grp.items.forEach((name) => {
+    DATA.push({
+      id: 'ref-' + DATA.length,
+      name,
+      maison: grp.maison,
+      idx: DATA.length
+    });
+  });
+});
 
 class Component extends DCLogic {
   constructor(props) {
@@ -278,16 +272,12 @@ class Component extends DCLogic {
   goHome = () => this.setState({ view: 'home' });
   openDetail = (id) => this.setState({ view: 'detail', selectedId: id });
 
-  buildCard(p, i) {
+  buildCard(p) {
     return {
       ...p,
-      swatchStyle: TONES[i % TONES.length],
-      num: 'N° ' + String(i + 1).padStart(2, '0'),
-      familyCaps: p.family.toUpperCase(),
-      revealStyle: {
-        animation: 'fadeUp 0.85s cubic-bezier(0.22,1,0.36,1) both',
-        animationDelay: (0.35 + i * 0.07).toFixed(2) + 's'
-      },
+      swatchStyle: TONES[p.idx % TONES.length],
+      num: 'N° ' + String(p.idx + 1).padStart(2, '0'),
+      maisonCaps: p.maison.toUpperCase(),
       open: () => this.openDetail(p.id)
     };
   }
@@ -352,13 +342,24 @@ class Component extends DCLogic {
       transform: opening ? 'translateY(-5px) rotate(-24deg)' : 'none'
     };
 
-    const perfumes = DATA.map((p, i) => this.buildCard(p, i));
-    const selIdx = DATA.findIndex(p => p.id === this.state.selectedId);
-    const selected = this.buildCard(DATA[selIdx], selIdx);
+    const maisonGroups = MAISONS.map((grp, gi) => {
+      const n = grp.items.length;
+      return {
+        maison: grp.maison,
+        countLabel: n + (n > 1 ? ' RÉFÉRENCES' : ' RÉFÉRENCE'),
+        revealStyle: {
+          animation: 'fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both',
+          animationDelay: (0.15 + gi * 0.06).toFixed(2) + 's'
+        },
+        items: DATA.filter((p) => p.maison === grp.maison).map((p) => this.buildCard(p))
+      };
+    });
+
+    const sel = DATA.find((p) => p.id === this.state.selectedId) || DATA[0];
+    const selected = this.buildCard(sel);
     const others = DATA
-      .map((p, i) => ({ p, i }))
-      .filter(({ p }) => p.id !== this.state.selectedId)
-      .map(({ p, i }) => this.buildCard(p, i));
+      .filter((p) => p.maison === sel.maison && p.id !== sel.id)
+      .map((p) => this.buildCard(p));
 
     return {
       isLoading: this.state.loading,
@@ -371,7 +372,7 @@ class Component extends DCLogic {
       lidLeftStyle, lidRightStyle, seamStyle, glowBurstStyle, centerStyle, lockWrapStyle, shackleStyle,
       ctaHover: { background: 'rgba(201,160,92,0.14)', borderColor: 'rgba(201,160,92,0.75)', color: '#ecd9ae' },
       cardHover: { transform: 'translateY(-5px)' },
-      perfumes, selected, others
+      maisonGroups, selected, others, hasOthers: others.length > 0
     };
   }
 }
