@@ -120,7 +120,6 @@
                             <span style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
                           </div>
                         </sc-if>
-                        <div style="position:absolute; top:11px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ p.num }}</div>
                       </div>
                     </div>
                     <div style="display:flex; flex-direction:column; gap:4px;">
@@ -163,7 +162,6 @@
                 <span style="font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.26em; color:rgba(255,255,255,0.4); margin-left:0.26em;">FLACON</span>
               </div>
             </sc-if>
-            <div style="position:absolute; top:12px; left:0; right:0; text-align:center; font-family:'Jost', sans-serif; font-size:9px; letter-spacing:0.32em; color:rgba(201,160,92,0.8); margin-left:0.32em;">{{ selected.num }}</div>
           </div>
         </div>
 
@@ -262,12 +260,12 @@ const TONES = [
 // { name, top, heart, base }  (pyramide olfactive)  ou  { name, notes } (liste simple).
 const MAISONS = [
   { maison: 'Maison Maya', items: [
-    { name: 'Royal Saffran', image: 'IMAGES/royal-safran.jpeg', top: ['Bergamote', 'Poivre rose'], heart: ['Romarin', 'Rose'], base: ['Safran', 'Cuir', 'Cèdre'] },
-    { name: 'Suave', image: 'IMAGES/suave.jpeg', top: ['Citron', 'Poire'], heart: ['Guimauve', 'Jasmin', "Fleur d'oranger"], base: ['Vanille', 'Bois de santal', 'Musc'] },
     { name: 'Réveil Lusitanie', image: 'IMAGES/reveil-lusitanie.jpeg', top: ['Orange sanguine', 'Mandarine', 'Citron'], heart: ['Abricot', 'Néroli', 'Jasmin', 'Gardénia'], base: ['Vanille', 'Musc'] },
     { name: 'Noyau Blanc', image: 'IMAGES/noyau-blanc.jpeg', top: ['Amande'], heart: ["Absolu d'iris", 'Caramel'], base: ['Cacahuète pralinée', 'Fève de tonka', 'Bois de santal'] },
     { name: 'Place Vendôme', image: 'IMAGES/place-vendome.jpeg', top: ['Mandarine', 'Poivre blanc', 'Néroli'], heart: ['Jasmin', 'Tubéreuse', 'Lys', 'Ambrette'], base: ['Vanille', 'Bois de santal', 'Benjoin'] },
-    { name: 'Mandoria', image: 'IMAGES/mandoria.jpeg', top: ['Amande', "Fleur d'oranger"], heart: ["Fleur d'amandier", 'Rose'], base: ['Vanille', 'Fève de tonka', 'Amyris'] }
+    { name: 'Suave', image: 'IMAGES/suave.jpeg', top: ['Citron', 'Poire'], heart: ['Guimauve', 'Jasmin', "Fleur d'oranger"], base: ['Vanille', 'Bois de santal', 'Musc'] },
+    { name: 'Mandoria', image: 'IMAGES/mandoria.jpeg', top: ['Amande', "Fleur d'oranger"], heart: ["Fleur d'amandier", 'Rose'], base: ['Vanille', 'Fève de tonka', 'Amyris'] },
+    { name: 'Royal Safran', image: 'IMAGES/royal-safran.jpeg', top: ['Bergamote', 'Poivre rose'], heart: ['Romarin', 'Rose'], base: ['Safran', 'Cuir', 'Cèdre'] }
   ] },
   { maison: 'Arts & Odeurs', items: ['Foudre Exotique', 'Sun Rose', 'Dragon Rose', "Sucre d'Antan", 'Vanille Américaine', 'Coco des Îles', 'Musc Fruité', 'Ice Blue'] },
   { maison: 'Maison Massimo', items: [
