@@ -21,6 +21,12 @@
     @keyframes keyholePulse { 0%,100% { box-shadow:0 0 4px rgba(201,160,92,0.35);} 50% { box-shadow:0 0 14px rgba(232,201,138,0.85);} }
     @keyframes seamGlow { 0%,100% { opacity:0.3; } 50% { opacity:0.75; } }
     @keyframes ringBreathe { 0%,100% { transform:scale(1); opacity:0.5; } 50% { transform:scale(1.04); opacity:0.9; } }
+    @keyframes moteFloat { 0% { transform:translate3d(0,0,0); opacity:0; } 15% { opacity:var(--mo,0.4); } 80% { opacity:var(--mo,0.4); } 100% { transform:translate3d(var(--mx,8px),-130px,0); opacity:0; } }
+    @keyframes seamFlare { 0% { opacity:0.95; transform:scaleX(1); } 55% { opacity:0.55; transform:scaleX(30); } 100% { opacity:0; transform:scaleX(70); } }
+    @keyframes lightWash { 0% { opacity:0; } 35% { opacity:1; } 100% { opacity:0; } }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+    }
     .no-scrollbar::-webkit-scrollbar { display:none; }
   </style>
 </helmet>
@@ -29,11 +35,29 @@
 
   <!-- ═══ PRÉLOADER — coffre aux trésors ═══ -->
   <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
-    <div style="position:fixed; inset:0; z-index:999; background:#080706; overflow:hidden;">
-      <div style="{{ lidLeftStyle }}"></div>
-      <div style="{{ lidRightStyle }}"></div>
+    <div style="{{ loaderShellStyle }}">
+      <div style="{{ lidLeftStyle }}">
+        <div style="position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(255,255,255,0.014) 0 2px, transparent 2px 9px);"></div>
+        <div style="position:absolute; inset:20px; border:1px solid rgba(201,160,92,0.11);"></div>
+        <div style="position:absolute; top:20px; right:20px; width:5px; height:5px; background:rgba(201,160,92,0.5); transform:translate(50%,-50%) rotate(45deg);"></div>
+        <div style="position:absolute; bottom:20px; right:20px; width:5px; height:5px; background:rgba(201,160,92,0.5); transform:translate(50%,50%) rotate(45deg);"></div>
+        <div style="position:absolute; top:0; bottom:0; right:0; width:70px; background:linear-gradient(270deg, rgba(201,160,92,0.09), transparent);"></div>
+      </div>
+      <div style="{{ lidRightStyle }}">
+        <div style="position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(255,255,255,0.014) 0 2px, transparent 2px 9px);"></div>
+        <div style="position:absolute; inset:20px; border:1px solid rgba(201,160,92,0.11);"></div>
+        <div style="position:absolute; top:20px; left:20px; width:5px; height:5px; background:rgba(201,160,92,0.5); transform:translate(-50%,-50%) rotate(45deg);"></div>
+        <div style="position:absolute; bottom:20px; left:20px; width:5px; height:5px; background:rgba(201,160,92,0.5); transform:translate(-50%,50%) rotate(45deg);"></div>
+        <div style="position:absolute; top:0; bottom:0; left:0; width:70px; background:linear-gradient(90deg, rgba(201,160,92,0.09), transparent);"></div>
+      </div>
       <div style="{{ seamStyle }}"></div>
       <div style="{{ glowBurstStyle }}"></div>
+      <div style="{{ moteLayerStyle }}">
+        <sc-for list="{{ motes }}" as="mote" hint-placeholder-count="0">
+          <div style="{{ mote.style }}"></div>
+        </sc-for>
+      </div>
+      <div style="{{ washStyle }}"></div>
       <sc-if value="{{ opening }}" hint-placeholder-val="{{ false }}">
         <sc-for list="{{ sparks }}" as="s" hint-placeholder-count="0">
           <div style="{{ s.style }}"></div>
@@ -42,27 +66,29 @@
 
       <div style="{{ centerStyle }}">
         <div style="display:flex; flex-direction:column; align-items:center; gap:26px;">
-          <div style="position:relative; width:104px; height:104px; display:flex; align-items:center; justify-content:center;">
+          <div style="position:relative; width:104px; height:104px; display:flex; align-items:center; justify-content:center; animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s both;">
             <div style="position:absolute; inset:0; border-radius:50%; border:1px solid rgba(201,160,92,0.28); animation:ringBreathe 4s ease-in-out infinite;"></div>
             <div style="width:82px; height:82px; border-radius:50%; background:#0e0c09; border:1px solid rgba(201,160,92,0.5); display:flex; align-items:center; justify-content:center;">
               <span style="font-family:'Cormorant Garamond', serif; font-weight:600; font-size:28px; color:#c9a05c; line-height:1;">IDZ</span>
             </div>
           </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:7px;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:7px; animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s both;">
             <span style="font-family:'Cormorant Garamond', serif; font-size:24px; letter-spacing:0.26em; color:#ece5da; margin-left:0.26em;">IDZ</span>
             <span style="font-size:9px; letter-spacing:0.52em; color:#9a8f80; font-family:'Jost', sans-serif; margin-left:0.52em;">FRAGRANCES</span>
             <div style="width:38px; height:1px; background:rgba(201,160,92,0.5); margin-top:4px;"></div>
           </div>
 
-          <div style="{{ lockWrapStyle }}">
-            <div style="{{ shackleStyle }}"></div>
-            <div style="width:46px; height:34px; border:1px solid rgba(201,160,92,0.7); background:linear-gradient(165deg, rgba(201,160,92,0.1), rgba(0,0,0,0)); border-radius:2px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-              <div style="width:7px; height:7px; border-radius:50%; background:#c9a05c; animation:keyholePulse 2.4s ease-in-out infinite;"></div>
-              <div style="width:2px; height:7px; background:#c9a05c; margin-top:-1px;"></div>
+          <div style="animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s both;">
+            <div style="{{ lockWrapStyle }}">
+              <div style="{{ shackleStyle }}"></div>
+              <div style="width:46px; height:34px; border:1px solid rgba(201,160,92,0.7); background:linear-gradient(165deg, rgba(201,160,92,0.1), rgba(0,0,0,0)); border-radius:2px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                <div style="width:7px; height:7px; border-radius:50%; background:#c9a05c; animation:keyholePulse 2.4s ease-in-out infinite;"></div>
+                <div style="width:2px; height:7px; background:#c9a05c; margin-top:-1px;"></div>
+              </div>
             </div>
           </div>
 
-          <button onClick="{{ openChest }}" style="margin-top:6px; background:transparent; border:1px solid rgba(201,160,92,0.4); color:#d8b97c; font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.38em; padding:15px 32px 15px 34px; cursor:pointer; transition:background 0.5s ease, border-color 0.5s ease, color 0.5s ease;" style-hover="{{ ctaHover }}">OUVRIR LE COFFRE</button>
+          <button onClick="{{ openChest }}" style="margin-top:6px; background:transparent; border:1px solid rgba(201,160,92,0.4); color:#d8b97c; font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.38em; padding:15px 32px 15px 34px; cursor:pointer; transition:background 0.5s ease, border-color 0.5s ease, color 0.5s ease, letter-spacing 0.6s cubic-bezier(0.22,1,0.36,1); animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.68s both;" style-hover="{{ chestCtaHover }}">OUVRIR LE COFFRE</button>
         </div>
       </div>
     </div>
@@ -85,13 +111,13 @@
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div style="padding:30px 20px 50px;">
       <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:15px; margin:16px 0 50px;">
-        <div style="display:flex; align-items:center; gap:16px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.05s both;">
+        <div style="display:flex; align-items:center; gap:16px; {{ heroRevealA }}">
           <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0), rgba(201,160,92,0.55));"></div>
           <span style="font-size:10px; letter-spacing:0.46em; color:#c9a05c; font-family:'Jost', sans-serif; margin-left:0.46em;">LA COLLECTION</span>
           <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.55), rgba(201,160,92,0));"></div>
         </div>
-        <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(36px,9vw,58px); color:#f2ead9; letter-spacing:0.02em; line-height:1.04; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;">Le Répertoire</div>
-        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;">Treize maisons, trente-trois signatures — parcourez la collection maison par maison, et ouvrez une fiche pour chaque référence.</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(36px,9vw,58px); color:#f2ead9; letter-spacing:0.02em; line-height:1.04; {{ heroRevealB }}">Le Répertoire</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; {{ heroRevealC }}">Treize maisons, trente-six signatures — parcourez la collection maison par maison, et ouvrez une fiche pour chaque référence.</div>
       </div>
 
       <div style="max-width:940px; margin:0 auto; display:flex; flex-direction:column; gap:58px;">
@@ -267,30 +293,40 @@ const MAISONS = [
     { name: 'Mandoria', image: 'IMAGES/mandoria.jpeg', top: ['Amande', "Fleur d'oranger"], heart: ["Fleur d'amandier", 'Rose'], base: ['Vanille', 'Fève de tonka', 'Amyris'] },
     { name: 'Royal Safran', image: 'IMAGES/royal-safran.jpeg', top: ['Bergamote', 'Poivre rose'], heart: ['Romarin', 'Rose'], base: ['Safran', 'Cuir', 'Cèdre'] }
   ] },
-  { maison: 'Arts & Odeurs', items: ['Foudre Exotique', 'Sun Rose', 'Dragon Rose', "Sucre d'Antan", 'Vanille Américaine', 'Coco des Îles', 'Musc Fruité', 'Ice Blue'] },
+  { maison: 'Arts & Odeurs', items: [
+    { name: 'Foudre Exotique', image: 'IMAGES/foudre%20exotic.jpeg' },
+    { name: 'Sun Rose', image: 'IMAGES/sun%20rose.jpeg' },
+    { name: 'Dragon Rose', image: 'IMAGES/dragon%20rose.jpeg' },
+    "Sucre d'Antan",
+    { name: 'Vanille Américaine', image: 'IMAGES/vanille%20americaine.jpeg' },
+    'Coco des Îles',
+    { name: 'Musc Fruité', image: 'IMAGES/musc%20fruite.jpeg' },
+    { name: 'Ice Blue', image: 'IMAGES/ice%20blue.jpeg' },
+    { name: 'Los Pepitos', image: 'IMAGES/los%20pepitos.jpeg' }
+  ] },
   { maison: 'Maison Massimo', items: [
-    { name: 'La Rose Bleue', top: ['Orange', 'Citron', 'Bergamote'], heart: ['Notes solaires', 'Fruits secs', 'Guimauve'], base: ['Musc', 'Vanille', 'Ambre'] },
-    { name: 'Gold Signature', top: ['Orange', 'Rhubarbe', 'Bergamote'], heart: ['Framboise', 'Cèdre', 'Notes solaires'], base: ['Patchouli', 'Vanille', 'Ambre gris', 'Musc'] }
+    { name: 'La Rose Bleue', image: 'IMAGES/la%20rose%20bleu.jpeg', top: ['Orange', 'Citron', 'Bergamote'], heart: ['Notes solaires', 'Fruits secs', 'Guimauve'], base: ['Musc', 'Vanille', 'Ambre'] },
+    { name: 'Gold Signature', image: 'IMAGES/gold%20signature.jpeg', top: ['Orange', 'Rhubarbe', 'Bergamote'], heart: ['Framboise', 'Cèdre', 'Notes solaires'], base: ['Patchouli', 'Vanille', 'Ambre gris', 'Musc'] }
   ] },
   { maison: 'Ulyka', items: [
     { name: 'Nota Loca', image: 'IMAGES/Nota%20loca.jpg', top: ["Baie d'açaï", 'Coco', 'Yuzu'], heart: ['Papaye', 'Mangue', 'Cardamome'], base: ['Musc', 'Vanille', 'Fève tonka'] },
     { name: 'Nota Sugar', image: 'IMAGES/Nota%20sugar.png', notes: ['Caramel', 'Ananas', 'Framboise', "Praline d'amande", 'Gousse de vanille', 'Fève tonka', 'Musc', 'Héliotrope'] }
   ] },
   { maison: 'Maison Mataha', items: [
-    { name: 'Pêche Velours', top: ['Pêche'], heart: ['Violette', 'Tubéreuse', 'Jasmin'], base: ['Vanille', 'Musc', 'Santal'] }
+    { name: 'Pêche Velours', image: 'IMAGES/peche%20velours.jpeg', top: ['Pêche'], heart: ['Violette', 'Tubéreuse', 'Jasmin'], base: ['Vanille', 'Musc', 'Santal'] }
   ] },
   { maison: 'Giardini di Toscana', items: [
-    { name: 'Bianco Latte', top: ['Caramel'], heart: ['Coumarine', 'Miel'], base: ['Vanille', 'Musc blanc'] }
+    { name: 'Bianco Latte', image: 'IMAGES/bianco%20latte.jpeg', top: ['Caramel'], heart: ['Coumarine', 'Miel'], base: ['Vanille', 'Musc blanc'] }
   ] },
   { maison: 'Al Fanak', items: [
     { name: 'Figue de Tipaza', image: 'IMAGES/figue%20de%20tipaza.jpg.webp', top: ['Figue', 'Fleurs blanches', 'Ylang-ylang'], heart: ['Cannelle', 'Figue', 'Jasmin', 'Ylang-ylang'], base: ['Vanille', 'Santal', 'Cèdre'] },
     { name: 'Cerise de Tlemcen', image: 'IMAGES/cerise%20de%20tlemcen.jpg.webp' }
   ] },
   { maison: 'Maison Fragranza', items: [
-    { name: 'Rosa Vento', top: ['Fruits rouges', 'Fruits exotiques'], heart: ['Rose blanche', 'Musc poudré'], base: ['Vanille crémeuse', 'Caramel', 'Musc'] },
-    { name: 'Fragamour', top: ['Poire blanche'], heart: ['Rose de Damas'], base: ['Vanille Bourbon', 'Fève tonka'] },
-    { name: 'Cœur Blanc', top: ['Coco', 'Vanille'], heart: ['Cèdre'], base: ['Musc blanc'] },
-    { name: 'Santal Gourmand', top: ["Fleur d'iris", 'Bois de santal'], heart: ['Ambre gris'], base: ['Vanille'] }
+    { name: 'Rosa Vento', image: 'IMAGES/rosa%20vento.png', top: ['Fruits rouges', 'Fruits exotiques'], heart: ['Rose blanche', 'Musc poudré'], base: ['Vanille crémeuse', 'Caramel', 'Musc'] },
+    { name: 'Fragamour', image: 'IMAGES/fragamour.jpeg', top: ['Poire blanche'], heart: ['Rose de Damas'], base: ['Vanille Bourbon', 'Fève tonka'] },
+    { name: 'Cœur Blanc', image: 'IMAGES/coeur%20blanc.jpeg', top: ['Coco', 'Vanille'], heart: ['Cèdre'], base: ['Musc blanc'] },
+    { name: 'Santal Gourmand', image: 'IMAGES/santal%20gourmand.jpeg', top: ["Fleur d'iris", 'Bois de santal'], heart: ['Ambre gris'], base: ['Vanille'] }
   ] },
   { maison: 'Jean Couturier', items: [
     { name: 'Divin Jasmin', top: ['Vanille', 'Miel', 'Musc'], heart: ['Ylang-ylang', 'Jasmin', 'Mimosa'], base: ['Baies rouges', 'Orange sanguine', 'Bergamote'] },
@@ -302,11 +338,11 @@ const MAISONS = [
     { name: 'Halim', image: 'IMAGES/halim.jpeg.webp', top: ['Sucre roux'], heart: ['Vanille'], base: ['Orchidée'] }
   ] },
   { maison: 'Rosendo Mateu', items: [
-    { name: 'RS5', top: ['Épices', 'Notes florales exotiques'], heart: ['Œillet', 'Muguet'], base: ['Ambre', 'Vanille', 'Musc'] },
-    { name: 'RS8', top: ['Ananas', 'Pomme', 'Poire', 'Agrumes'], heart: ['Cannelle', 'Patchouli', 'Iris', 'Rose de Bulgarie', 'Ambre'], base: ['Vanille', 'Cèdre', 'Bois de gaïac', 'Vétiver'] }
+    { name: 'RS5', image: 'IMAGES/rs5.jpeg', top: ['Épices', 'Notes florales exotiques'], heart: ['Œillet', 'Muguet'], base: ['Ambre', 'Vanille', 'Musc'] },
+    { name: 'RS8', image: 'IMAGES/rs8.jpeg', top: ['Ananas', 'Pomme', 'Poire', 'Agrumes'], heart: ['Cannelle', 'Patchouli', 'Iris', 'Rose de Bulgarie', 'Ambre'], base: ['Vanille', 'Cèdre', 'Bois de gaïac', 'Vétiver'] }
   ] },
   { maison: 'Sospiro', items: [
-    { name: 'Dolce Melodia', top: ['Mandarine', 'Orange', 'Safran'], heart: ['Poire', 'Cassis', 'Gardénia', 'Jasmin', 'Rose'], base: ['Musc blanc', 'Vanille', 'Santal'] }
+    { name: 'Dolce Melodia', image: 'IMAGES/dolce%20melodia.jpeg', top: ['Mandarine', 'Orange', 'Safran'], heart: ['Poire', 'Cassis', 'Gardénia', 'Jasmin', 'Rose'], base: ['Musc blanc', 'Vanille', 'Santal'] }
   ] },
   { maison: 'Stéphanie de Bruijn', items: [
     { name: 'Mecca Oud', top: ['Bois nobles'], heart: ['Encens'], base: ['Musc'] }
@@ -338,9 +374,33 @@ class Component extends DCLogic {
       view: 'home',
       selectedId: DATA[0].id,
       loading: !(props && props.skipLoader),
-      opening: false
+      opening: false,
+      revealed: !!(props && props.skipLoader)
     };
-    const count = Math.round((props && props.sparkCount) || 26);
+    this._reducedMotion = typeof window !== 'undefined' && window.matchMedia
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const moteCount = this._reducedMotion ? 0 : 18;
+    this._motes = Array.from({ length: moteCount }, (_, i) => {
+      const size = 1 + Math.random() * 2.2;
+      const dur = 8 + Math.random() * 9;
+      return {
+        id: i,
+        style: {
+          position: 'absolute',
+          left: (4 + Math.random() * 92).toFixed(1) + '%',
+          top: (16 + Math.random() * 82).toFixed(1) + '%',
+          width: size.toFixed(1) + 'px', height: size.toFixed(1) + 'px',
+          borderRadius: '50%',
+          background: '#ecd9ae',
+          boxShadow: '0 0 6px 1px rgba(201,160,92,0.4)',
+          filter: i % 2 ? 'blur(0.6px)' : 'none',
+          '--mx': (Math.random() * 36 - 18).toFixed(0) + 'px',
+          '--mo': (0.18 + Math.random() * 0.38).toFixed(2),
+          animation: 'moteFloat ' + dur.toFixed(1) + 's linear ' + (-Math.random() * dur).toFixed(1) + 's infinite'
+        }
+      };
+    });
+    const count = this._reducedMotion ? 0 : Math.round((props && props.sparkCount) || 26);
     this._sparks = Array.from({ length: count }, (_, i) => {
       const angle = (Math.PI * 2 * i) / count + Math.random() * 0.4;
       const dist = 70 + Math.random() * 190;
@@ -363,7 +423,10 @@ class Component extends DCLogic {
 
   openChest = () => {
     this.setState({ opening: true });
-    setTimeout(() => this.setState({ loading: false }), 2200);
+    const revealAt = this._reducedMotion ? 60 : 1250;
+    const doneAt = this._reducedMotion ? 220 : 2400;
+    setTimeout(() => this.setState({ revealed: true }), revealAt);
+    setTimeout(() => this.setState({ loading: false }), doneAt);
   };
 
   goHome = () => this.setState({ view: 'home' });
@@ -392,6 +455,14 @@ class Component extends DCLogic {
 
   renderVals() {
     const opening = this.state.opening;
+    const revealed = this.state.revealed;
+
+    const loaderShellStyle = {
+      position: 'fixed', inset: 0, zIndex: 999, overflow: 'hidden',
+      backgroundColor: opening ? 'rgba(8,7,6,0)' : '#080706',
+      transition: 'background-color 1.1s ease 0.75s',
+      pointerEvents: opening ? 'none' : 'auto'
+    };
 
     const lidBase = {
       position: 'absolute', top: 0, bottom: 0, width: '50%', zIndex: 1,
@@ -414,11 +485,13 @@ class Component extends DCLogic {
       position: 'absolute', top: 0, bottom: 0, left: '50%', width: '3px', zIndex: 3, marginLeft: '-1.5px',
       background: 'linear-gradient(rgba(236,217,174,0), rgba(236,217,174,0.95), rgba(236,217,174,0))',
       boxShadow: '0 0 60px 14px rgba(201,160,92,0.5)',
-      opacity: 0,
-      transition: 'opacity 1.2s ease 0.9s'
+      transformOrigin: '50% 50%', pointerEvents: 'none',
+      animation: 'seamFlare 1.7s cubic-bezier(0.22,1,0.36,1) 0.5s both'
     } : {
       position: 'absolute', top: 0, bottom: 0, left: '50%', width: '1px', zIndex: 3,
       background: 'linear-gradient(rgba(201,160,92,0), rgba(201,160,92,0.5), rgba(201,160,92,0))',
+      boxShadow: '0 0 26px 5px rgba(201,160,92,0.16)',
+      pointerEvents: 'none',
       animation: 'seamGlow 3.5s ease-in-out infinite'
     };
     const glowBurstStyle = opening ? {
@@ -426,6 +499,16 @@ class Component extends DCLogic {
       borderRadius: '50%', pointerEvents: 'none',
       background: 'radial-gradient(circle, rgba(236,217,174,0.55), rgba(201,160,92,0.16) 45%, transparent 70%)',
       animation: 'glowBurst 1.6s ease-out 0.4s both'
+    } : { display: 'none' };
+    const moteLayerStyle = {
+      position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+      opacity: opening ? 0 : 1,
+      transition: 'opacity 1.6s ease 0.6s'
+    };
+    const washStyle = opening ? {
+      position: 'absolute', inset: 0, zIndex: 6, pointerEvents: 'none',
+      background: 'radial-gradient(circle at 50% 45%, rgba(236,217,174,0.30), rgba(201,160,92,0.10) 45%, transparent 75%)',
+      animation: 'lightWash 1.4s ease-out 0.8s both'
     } : { display: 'none' };
     const centerStyle = {
       position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2,
@@ -450,15 +533,19 @@ class Component extends DCLogic {
       transform: opening ? 'translateY(-5px) rotate(-24deg)' : 'none'
     };
 
+    const heroReveal = (delay) => revealed
+      ? 'animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) ' + delay + 's both;'
+      : 'opacity:0;';
+
     const maisonGroups = MAISONS.map((grp, gi) => {
       const n = grp.items.length;
       return {
         maison: grp.maison,
         countLabel: n + (n > 1 ? ' RÉFÉRENCES' : ' RÉFÉRENCE'),
-        revealStyle: {
+        revealStyle: revealed ? {
           animation: 'fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both',
-          animationDelay: (0.15 + gi * 0.06).toFixed(2) + 's'
-        },
+          animationDelay: (0.3 + gi * 0.08).toFixed(2) + 's'
+        } : { opacity: 0 },
         items: DATA.filter((p) => p.maison === grp.maison).map((p) => this.buildCard(p))
       };
     });
@@ -475,10 +562,14 @@ class Component extends DCLogic {
       isDetail: this.state.view === 'detail',
       opening,
       sparks: this._sparks,
+      motes: this._motes,
       openChest: this.openChest,
       goHome: this.goHome,
       lidLeftStyle, lidRightStyle, seamStyle, glowBurstStyle, centerStyle, lockWrapStyle, shackleStyle,
+      loaderShellStyle, moteLayerStyle, washStyle,
+      heroRevealA: heroReveal(0.1), heroRevealB: heroReveal(0.22), heroRevealC: heroReveal(0.34),
       ctaHover: { background: 'rgba(201,160,92,0.14)', borderColor: 'rgba(201,160,92,0.75)', color: '#ecd9ae' },
+      chestCtaHover: { background: 'rgba(201,160,92,0.14)', borderColor: 'rgba(201,160,92,0.75)', color: '#ecd9ae', letterSpacing: '0.44em' },
       cardHover: { transform: 'translateY(-5px)' },
       maisonGroups, selected, others, hasOthers: others.length > 0
     };
