@@ -20,7 +20,6 @@
     @keyframes glowBurst { 0% { transform:translate(-50%,-50%) scale(0.1); opacity:0; } 25% { opacity:0.9; } 100% { transform:translate(-50%,-50%) scale(3.8); opacity:0; } }
     @keyframes keyholePulse { 0%,100% { box-shadow:0 0 4px rgba(201,160,92,0.35);} 50% { box-shadow:0 0 14px rgba(232,201,138,0.85);} }
     @keyframes seamGlow { 0%,100% { opacity:0.3; } 50% { opacity:0.75; } }
-    @keyframes ringBreathe { 0%,100% { transform:scale(1); opacity:0.5; } 50% { transform:scale(1.04); opacity:0.9; } }
     @keyframes moteFloat { 0% { transform:translate3d(0,0,0); opacity:0; } 15% { opacity:var(--mo,0.4); } 80% { opacity:var(--mo,0.4); } 100% { transform:translate3d(var(--mx,8px),-130px,0); opacity:0; } }
     @keyframes seamFlare { 0% { opacity:0.95; transform:scaleX(1); } 55% { opacity:0.55; transform:scaleX(30); } 100% { opacity:0; transform:scaleX(70); } }
     @keyframes lightWash { 0% { opacity:0; } 35% { opacity:1; } 100% { opacity:0; } }
@@ -66,19 +65,11 @@
 
       <div style="{{ centerStyle }}">
         <div style="display:flex; flex-direction:column; align-items:center; gap:26px;">
-          <div style="position:relative; width:104px; height:104px; display:flex; align-items:center; justify-content:center; animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s both;">
-            <div style="position:absolute; inset:0; border-radius:50%; border:1px solid rgba(201,160,92,0.28); animation:ringBreathe 4s ease-in-out infinite;"></div>
-            <div style="width:82px; height:82px; border-radius:50%; background:#0e0c09; border:1px solid rgba(201,160,92,0.5); display:flex; align-items:center; justify-content:center;">
-              <span style="font-family:'Cormorant Garamond', serif; font-weight:600; font-size:28px; color:#c9a05c; line-height:1;">IDZ</span>
-            </div>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:7px; animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s both;">
-            <span style="font-family:'Cormorant Garamond', serif; font-size:24px; letter-spacing:0.26em; color:#ece5da; margin-left:0.26em;">IDZ</span>
-            <span style="font-size:9px; letter-spacing:0.52em; color:#9a8f80; font-family:'Jost', sans-serif; margin-left:0.52em;">FRAGRANCES</span>
-            <div style="width:38px; height:1px; background:rgba(201,160,92,0.5); margin-top:4px;"></div>
+          <div style="animation:fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.1s both;">
+            <img src="IMAGES/logo%20idz.png" alt="IDZ Fragrances" decoding="async" style="width:min(280px,74vw); height:auto; display:block;" />
           </div>
 
-          <div style="animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s both;">
+          <div style="animation:fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.45s both;">
             <div style="{{ lockWrapStyle }}">
               <div style="{{ shackleStyle }}"></div>
               <div style="width:46px; height:34px; border:1px solid rgba(201,160,92,0.7); background:linear-gradient(165deg, rgba(201,160,92,0.1), rgba(0,0,0,0)); border-radius:2px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
@@ -96,15 +87,7 @@
 
   <!-- ═══ EN-TÊTE ═══ -->
   <div onClick="{{ goHome }}" style="position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:center; padding:15px 18px 13px; background:linear-gradient(180deg, rgba(8,7,6,0.97), rgba(8,7,6,0.86)); backdrop-filter:blur(8px); border-bottom:1px solid rgba(201,160,92,0.16); cursor:pointer;">
-    <div style="display:flex; align-items:center; gap:12px;">
-      <div style="width:32px; height:32px; border-radius:50%; background:#0e0c09; border:1px solid rgba(201,160,92,0.5); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-        <span style="font-family:'Cormorant Garamond', serif; font-weight:600; font-size:13px; color:#c9a05c; line-height:1;">IDZ</span>
-      </div>
-      <div style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.1;">
-        <span style="font-family:'Cormorant Garamond', serif; font-size:16px; letter-spacing:0.2em; color:#ece5da;">IDZ</span>
-        <span style="font-size:7.5px; letter-spacing:0.4em; color:#9a8f80; font-family:'Jost', sans-serif;">FRAGRANCES</span>
-      </div>
-    </div>
+    <img src="IMAGES/logo%20idz.png" alt="IDZ Fragrances" decoding="async" style="height:44px; width:auto; display:block;" />
   </div>
 
   <!-- ═══ ACCUEIL ═══ -->
