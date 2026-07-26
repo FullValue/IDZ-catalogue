@@ -117,7 +117,7 @@
           <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.55), rgba(201,160,92,0));"></div>
         </div>
         <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(36px,9vw,58px); color:#f2ead9; letter-spacing:0.02em; line-height:1.04; {{ heroRevealB }}">Le Répertoire</div>
-        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; {{ heroRevealC }}">Treize maisons, trente-six signatures — parcourez la collection maison par maison, et ouvrez une fiche pour chaque référence.</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; {{ heroRevealC }}">Quatorze maisons, quarante-sept signatures — parcourez la collection maison par maison, et ouvrez une fiche pour chaque référence.</div>
       </div>
 
       <div style="max-width:940px; margin:0 auto; display:flex; flex-direction:column; gap:58px;">
@@ -293,13 +293,30 @@ const MAISONS = [
     { name: 'Mandoria', image: 'IMAGES/mandoria.jpeg', top: ['Amande', "Fleur d'oranger"], heart: ["Fleur d'amandier", 'Rose'], base: ['Vanille', 'Fève de tonka', 'Amyris'] },
     { name: 'Royal Safran', image: 'IMAGES/royal-safran.jpeg', top: ['Bergamote', 'Poivre rose'], heart: ['Romarin', 'Rose'], base: ['Safran', 'Cuir', 'Cèdre'] }
   ] },
+  { maison: 'Atelier des Fèves', items: [
+    { name: 'Noble Tonka', image: 'IMAGES/noble-tonka-cat.jpg' },
+    { name: 'Vanille Alchimique', image: 'IMAGES/vanille-alchimique-cat.jpg' },
+    { name: 'Crème Anglaise', image: 'IMAGES/creme-anglaise-cat.jpg' },
+    { name: 'Liqueur de Framboise', image: 'IMAGES/liqueur-framboise-cat.jpg' },
+    { name: 'Figue de Minuit', image: 'IMAGES/figue-de-minuit-cat.jpg' },
+    { name: 'Balade en Barbade', image: 'IMAGES/balade-en-barbade-cat.jpg' },
+    { name: 'Un Soir de Gala', image: 'IMAGES/un-soir-de-gala-cat.jpg' },
+    { name: 'Cuir Saint-Honoré', image: 'IMAGES/Cuir-Saint-honore.webp' },
+    { name: 'Bois Vendôme', image: 'IMAGES/Bois-vendome-categorie-produit-1548x2048.jpg' }
+  ] },
+  { maison: 'Les Princes du Golfe', items: [
+    { name: 'Citron Macaron', image: 'IMAGES/citron%20macaron.jpeg' },
+    { name: 'Exquisite Pear', image: 'IMAGES/exquisite%20pear.jpeg' },
+    { name: 'Cherry of Cashmere', image: 'IMAGES/cherry%20of%20cashmere.jpeg' },
+    { name: 'Vanilla Island', image: 'IMAGES/vanilla%20island.jpeg' }
+  ] },
   { maison: 'Arts & Odeurs', items: [
     { name: 'Foudre Exotique', image: 'IMAGES/foudre%20exotic.jpeg' },
     { name: 'Sun Rose', image: 'IMAGES/sun%20rose.jpeg' },
     { name: 'Dragon Rose', image: 'IMAGES/dragon%20rose.jpeg' },
-    "Sucre d'Antan",
+    { name: "Sucre d'Antan", image: "IMAGES/sucre%20d'antan.jpeg" },
     { name: 'Vanille Américaine', image: 'IMAGES/vanille%20americaine.jpeg' },
-    'Coco des Îles',
+    { name: 'Coco des Îles', image: 'IMAGES/coco%20des%20iles.jpeg' },
     { name: 'Musc Fruité', image: 'IMAGES/musc%20fruite.jpeg' },
     { name: 'Ice Blue', image: 'IMAGES/ice%20blue.jpeg' },
     { name: 'Los Pepitos', image: 'IMAGES/los%20pepitos.jpeg' }
@@ -327,10 +344,6 @@ const MAISONS = [
     { name: 'Fragamour', image: 'IMAGES/fragamour.jpeg', top: ['Poire blanche'], heart: ['Rose de Damas'], base: ['Vanille Bourbon', 'Fève tonka'] },
     { name: 'Cœur Blanc', image: 'IMAGES/coeur%20blanc.jpeg', top: ['Coco', 'Vanille'], heart: ['Cèdre'], base: ['Musc blanc'] },
     { name: 'Santal Gourmand', image: 'IMAGES/santal%20gourmand.jpeg', top: ["Fleur d'iris", 'Bois de santal'], heart: ['Ambre gris'], base: ['Vanille'] }
-  ] },
-  { maison: 'Jean Couturier', items: [
-    { name: 'Divin Jasmin', top: ['Vanille', 'Miel', 'Musc'], heart: ['Ylang-ylang', 'Jasmin', 'Mimosa'], base: ['Baies rouges', 'Orange sanguine', 'Bergamote'] },
-    { name: 'Vanilla Exotica', top: ['Vanille', 'Coco', 'Pêche'], heart: ['Jasmin', 'Tiaré'], base: ['Notes boisées', 'Musc'] }
   ] },
   { maison: 'Maison Berliner', items: [
     { name: 'Sucre Pink', image: 'IMAGES/sucre%20pink.jpeg.webp', top: ['Framboise', 'Coco'], heart: ['Caramel', 'Sucre roux'], base: ['Musc', 'Rose'] },
