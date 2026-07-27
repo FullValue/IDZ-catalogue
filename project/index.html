@@ -104,7 +104,7 @@
           <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.55), rgba(201,160,92,0));"></div>
         </div>
         <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(32px,8.5vw,52px); color:#f2ead9; letter-spacing:0.02em; line-height:1.1; max-width:640px; {{ heroRevealB }}">Trouvez votre signature olfactive</div>
-        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; {{ heroRevealC }}">Quatorze maisons, près de cinquante références — parcourez la collection maison par maison, et ouvrez une fiche pour chaque création.</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; {{ heroRevealC }}">Douze maisons, plus de quarante références — parcourez la collection maison par maison, et ouvrez une fiche pour chaque création.</div>
       </div>
 
       <div style="max-width:940px; margin:0 auto; display:flex; flex-direction:column; gap:58px;">
@@ -137,7 +137,7 @@
                     </div>
                     <div style="display:flex; flex-direction:column; gap:4px;">
                       <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:19px; color:#f2ead9; line-height:1.14;">{{ p.name }}</div>
-                      <div style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.24em; color:#c9a05c; margin-left:0.24em;">EAU DE PARFUM</div>
+                      <div style="font-family:'Jost', sans-serif; font-size:8px; letter-spacing:0.24em; color:#c9a05c; margin-left:0.24em;">{{ p.typeCaps }}</div>
                     </div>
                   </div>
                 </div>
@@ -181,7 +181,7 @@
         <div style="animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.15s both;">
           <div style="font-family:'Jost', sans-serif; font-size:10px; letter-spacing:0.4em; color:#c9a05c; margin-bottom:12px; margin-left:0.4em;">{{ selected.maisonCaps }}</div>
           <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(34px,9vw,52px); color:#f2ead9; line-height:1.04;">{{ selected.name }}</div>
-          <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:14px; color:#8d8172; margin-top:10px;">Eau de Parfum</div>
+          <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:14px; color:#8d8172; margin-top:10px;">{{ selected.type }}</div>
         </div>
 
         <div style="display:flex; align-items:center; gap:13px; animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s both;">
@@ -320,7 +320,7 @@ const MAISONS = [
     { name: 'Pêche Velours', image: 'IMAGES/peche%20velours.jpeg', top: ['Pêche'], heart: ['Violette', 'Tubéreuse', 'Jasmin'], base: ['Vanille', 'Musc', 'Santal'] }
   ] },
   { maison: 'Giardini di Toscana', items: [
-    { name: 'Bianco Latte', image: 'IMAGES/bianco%20latte.jpeg', top: ['Caramel'], heart: ['Coumarine', 'Miel'], base: ['Vanille', 'Musc blanc'] }
+    { name: 'Bianco Latte', image: 'IMAGES/bianco%20latte.jpeg', type: 'Eau de Parfum', top: ['Caramel'], heart: ['Coumarine', 'Miel'], base: ['Vanille', 'Musc blanc'] }
   ] },
   { maison: 'Al Fanak', items: [
     { name: 'Figue de Tipaza', image: 'IMAGES/figue%20de%20tipaza.jpg.webp', top: ['Figue', 'Fleurs blanches', 'Ylang-ylang'], heart: ['Cannelle', 'Figue', 'Jasmin', 'Ylang-ylang'], base: ['Vanille', 'Santal', 'Cèdre'] },
@@ -337,15 +337,8 @@ const MAISONS = [
     { name: 'Buteur', image: 'IMAGES/buteur.jpeg.webp', top: ['Agrumes', 'Épices fraîches'], heart: ['Bois nobles', 'Notes aromatiques'], base: ['Ambre', 'Musc', 'Notes chaudes'] },
     { name: 'Halim', image: 'IMAGES/halim.jpeg.webp', top: ['Agrumes', 'Épices fraîches'], heart: ['Accords aromatiques', 'Notes florales légères'], base: ['Bois précieux', 'Ambre', 'Musc'] }
   ] },
-  { maison: 'Rosendo Mateu', items: [
-    { name: 'RS5', image: 'IMAGES/rs5.jpeg', top: ['Épices', 'Notes florales exotiques'], heart: ['Œillet', 'Muguet'], base: ['Ambre', 'Vanille', 'Musc'] },
-    { name: 'RS8', image: 'IMAGES/rs8.jpeg', top: ['Ananas', 'Pomme', 'Poire', 'Agrumes'], heart: ['Cannelle', 'Patchouli', 'Iris', 'Rose de Bulgarie', 'Ambre'], base: ['Vanille', 'Cèdre', 'Bois de gaïac', 'Vétiver'] }
-  ] },
   { maison: 'Sospiro', items: [
-    { name: 'Dolce Melodia', image: 'IMAGES/dolce%20melodia.jpeg', top: ['Mandarine', 'Orange', 'Safran'], heart: ['Poire', 'Cassis', 'Gardénia', 'Jasmin', 'Rose'], base: ['Musc blanc', 'Vanille', 'Santal'] }
-  ] },
-  { maison: 'Stéphanie de Bruijn', items: [
-    { name: 'Mecca Oud', image: 'IMAGES/mecca%20oud.webp', top: ['Bois nobles'], heart: ['Encens'], base: ['Musc'] }
+    { name: 'Dolce Melodia', image: 'IMAGES/dolce%20melodia.jpeg', type: 'Eau de Parfum', top: ['Mandarine', 'Orange', 'Safran'], heart: ['Poire', 'Cassis', 'Gardénia', 'Jasmin', 'Rose'], base: ['Musc blanc', 'Vanille', 'Santal'] }
   ] }
 ];
 
@@ -359,6 +352,7 @@ MAISONS.forEach((grp) => {
       maison: grp.maison,
       idx: DATA.length,
       image: it.image || null,
+      type: it.type || 'Extrait de Parfum',
       top: it.top || null,
       heart: it.heart || null,
       base: it.base || null,
@@ -444,6 +438,7 @@ class Component extends DCLogic {
       swatchStyle: TONES[p.idx % TONES.length],
       num: 'N° ' + String(p.idx + 1).padStart(2, '0'),
       maisonCaps: p.maison.toUpperCase(),
+      typeCaps: p.type.toUpperCase(),
       hasImage: !!p.image,
       noImage: !p.image,
       hasPyramid,
