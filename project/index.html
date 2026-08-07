@@ -104,7 +104,7 @@
           <div style="width:46px; height:1px; background:linear-gradient(90deg, rgba(201,160,92,0.55), rgba(201,160,92,0));"></div>
         </div>
         <div style="font-family:'Cormorant Garamond', serif; font-weight:500; font-size:clamp(32px,8.5vw,52px); color:#f2ead9; letter-spacing:0.02em; line-height:1.1; max-width:640px; {{ heroRevealB }}">Trouvez votre signature olfactive</div>
-        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; {{ heroRevealC }}">Quinze maisons, près de cinquante références. Parcourez la collection maison par maison, et ouvrez une fiche pour chaque création.</div>
+        <div style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:16px; color:#a89b89; max-width:460px; line-height:1.55; {{ heroRevealC }}">Seize maisons, plus de cinquante références. Parcourez la collection maison par maison, et ouvrez une fiche pour chaque création.</div>
       </div>
 
       <div style="max-width:940px; margin:0 auto; display:flex; flex-direction:column; gap:58px;">
@@ -279,6 +279,16 @@ const MAISONS = [
     { name: 'Suave', image: 'IMAGES/suave.jpeg', top: ['Citron', 'Poire'], heart: ['Guimauve', 'Jasmin', "Fleur d'oranger"], base: ['Vanille', 'Bois de santal', 'Musc'] },
     { name: 'Mandoria', image: 'IMAGES/mandoria.jpeg', top: ['Amande', "Fleur d'oranger"], heart: ["Fleur d'amandier", 'Rose'], base: ['Vanille', 'Fève de tonka', 'Amyris'] },
     { name: 'Royal Safran', image: 'IMAGES/royal-safran.jpeg', top: ['Bergamote', 'Poivre rose'], heart: ['Romarin', 'Rose'], base: ['Safran', 'Cuir', 'Cèdre'] }
+  ] },
+  { maison: 'Placebo', items: [
+    { name: 'Nouveau Riche', image: 'IMAGES/nouveau%20riche.jpeg', top: ['Cannelle épicée', 'Menthe fraîche', 'Cacao luxueux'], heart: ['Lavande réinventée', 'Ciste résineuse'], base: ['Fève tonka', 'Patchouli profond'] },
+    { name: 'Jalila', image: 'IMAGES/jalila.jpeg', top: ['Bergamote pétillante', 'Fraîcheur citronnée vivifiante'], heart: ['Jasmin précieux', 'Rose délicate', 'Accord floral sophistiqué'], base: ['Santal crémeux', 'Musc délicat', 'Bois précieux'] },
+    { name: 'Dernier Métro', image: 'IMAGES/dernier%20métro.jpeg', top: ['Litchi charnu', 'Cassis vif', 'Rhubarbe gourmande', 'Bergamote fruitée'], heart: ["Fleur d'oranger", 'Framboise juteuse', 'Rose élégante'], base: ['Musc doux', 'Patchouli profond', 'Vanille enveloppante', 'Marshmallow poudré'] },
+    { name: 'Belle Étoile', image: 'IMAGES/belle%20étoile.jpeg', top: ['Bergamote lumineuse', 'Poivre rose', 'Cardamome épicée'], heart: ['Rose de Damas', 'Jasmin absolu', 'Accord fruité chaleureux'], base: ['Ambre doré', 'Musc soyeux', 'Bois de santal crémeux'] },
+    { name: 'Gris Solaire', image: 'IMAGES/gris%20solaire.jpeg', top: ['Cassis noir pétillant', 'Gingembre piquant', 'Amande veloutée'], heart: ['Iris poudrée noble', 'Tubéreuse envoûtante', 'Fève tonka gourmande'], base: ['Musc blanc pur', 'Patchouli moderne', 'Vétiver boisé'] },
+    { name: "Rue d'Alger", image: "IMAGES/rue%20d'alger.jpeg", top: ['Épices orientales', 'Cardamome précieuse', 'Poivre rose délicat'], heart: ['Rose de Damas', 'Oud mystique', 'Encens sacré'], base: ['Bois de santal', 'Ambre chaleureux', 'Musc blanc'] },
+    { name: 'Créponné', image: 'IMAGES/créponné.jpeg', top: ['Citron jaune', 'Citron vert', 'Bergamote', 'Cassis', 'Menthe poivrée', 'Aldéhyde'], heart: ['Tubéreuse', "Fleur d'oranger", 'Accord cornet', 'Jasmin'], base: ['Vanille de Madagascar', 'Bois de cachemire', 'Benjoin Siam', 'Tonka', 'Musc ambrette', 'Bois de santal', 'Mousse de chêne'] },
+    { name: 'Misserghin', image: 'IMAGES/misserghin.jpeg', top: ['Mandarine', 'Clémentine', 'Piment', 'Cacao amer'], heart: ['Carotte botanique', "Cèdre de l'Atlas"], base: ['Tabac précieux', 'Baume mystique', 'Vanille envoûtante', 'Fumé subtil'] }
   ] },
   { maison: 'Gamalion Paris', items: [
     { name: 'Gingembre Nianela', image: 'IMAGES/gingembre%20nianela.jpeg', top: ['Gingembre', 'Citron', 'Orange'], heart: ['Poivre', 'Patchouli', 'Santal'], base: ['Fève tonka', 'Vanille', 'Iris'] },
